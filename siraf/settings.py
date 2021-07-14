@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'apps.notificacoes',
     'apps.core',
     'apps.perfil',
+    'apps.juridico',
 ]
 
 MIDDLEWARE = [
