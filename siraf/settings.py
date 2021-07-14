@@ -39,8 +39,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'widget_tweaks',
     'apps.notificacoes',
     'apps.core',
+    'apps.perfil',
 ]
 
 MIDDLEWARE = [
@@ -115,6 +117,8 @@ USE_L10N = True
 
 USE_TZ = True
 
+LOGIN_REDIRECT_URL = '/perfil/'
+LOGOUT_REDIRECT_URL = '/accounts/login'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
