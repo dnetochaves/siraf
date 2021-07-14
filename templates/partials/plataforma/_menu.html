@@ -17,7 +17,13 @@
         <a href="#" class="dropdown-notification-item">
             <div class="dropdown-notification-icon">
 
-                <i class="fa fa-envelope fa-lg fa-fw text-danger"></i>
+                {% if notificacao.alert == 'd' %}
+                    <i class="fa fa-envelope fa-lg fa-fw text-danger"></i>
+                {% elif notificacao.alert == 's' %}
+                    <i class="fa fa-envelope fa-lg fa-fw text-success"></i>
+                {% elif notificacao.alert == 'w' %}
+                    <i class="fa fa-envelope fa-lg fa-fw text-warning"></i>
+                {% endif %}
 
 
             </div>
