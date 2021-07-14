@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 
 class Contrato(models.Model):
@@ -7,3 +8,5 @@ class Contrato(models.Model):
     date = models.DateField(auto_now=False, auto_now_add=True)
     number = models.IntegerField()
     validity = models.IntegerField()
+    responsible = models.ForeignKey(
+        User, on_delete=models.CASCADE, null=True, blank=True, related_name="responsible")
