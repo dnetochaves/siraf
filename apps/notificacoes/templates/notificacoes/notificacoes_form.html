@@ -1,0 +1,106 @@
+{% extends 'plataforma_base.html' %}
+{% load static %}
+{% load widget_tweaks %}
+
+
+{% block title %}
+Notificações
+{% endblock title %}
+
+
+{% block content %}
+<div id="content" class="app-content">
+    <div class="container">
+        <!-- BEGIN row -->
+        <div class="row justify-content-center">
+            <!-- BEGIN col-10 -->
+            <div class="col-xl-10">
+                <!-- BEGIN row -->
+                <div class="row">
+                    <!-- BEGIN col-9 -->
+                    <div class="col-xl-9">
+                        <ul class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="#">NOTIFICAÇÕES</a></li>
+                            <li class="breadcrumb-item active">NOVA NOTIFICAÇÃO</li>
+                        </ul>
+
+                        <h1 class="page-header">
+                            NOVA NOTIFICAÇÃO <small>Enviar mensagem</small>
+                        </h1>
+
+                        <hr class="mb-4" />
+
+                        <!-- BEGIN #formControls -->
+                        <div id="formControls" class="mb-5">
+                            <form action="" method="POST">
+                                {% csrf_token %}
+                                <div class="card">
+                                    <div class="card-body pb-2">
+
+                                        <div class="row">
+                                            <div class="col-xl-12">
+                                                <div class="form-group mb-3">
+                                                    <label class="form-label" for="exampleFormControlInput1">De</label>
+                                                    {{ form.message_to | add_class:"form-control form-select" }}
+                                                </div>
+                                                <div class="form-group mb-3">
+                                                    <label class="form-label"
+                                                        for="exampleFormControlTextarea1">Para</label>
+                                                    {{ form.message_from | add_class:"form-control form-select" }}
+                                                </div>
+
+
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                                <div class="card">
+                                    <div class="card-body pb-2">
+
+                                        <div class="row">
+                                            <div class="col-xl-6">
+                                                <div class="form-group mb-3">
+                                                    <label class="form-label"
+                                                        for="exampleFormControlInput1">Prioridade</label>
+                                                    {{ form.alert | add_class:"form-control form-select" }}
+                                                </div>
+                                                <div class="form-group mb-3">
+                                                    <label class="form-label"
+                                                        for="exampleFormControlTextarea1">Titulo</label>
+                                                    {{ form.title | add_class:"form-control" }}
+                                                </div>
+
+
+                                            </div>
+                                            <div class="col-xl-6">
+                                                <div class="form-group mb-3">
+                                                    <label class="form-label"
+                                                        for="exampleFormControlTextarea1">Texto</label>
+                                                    {{ form.text | add_class:"form-control" }}
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <button type="submit" class="btn btn-primary">Enviar</button>
+                            </form>
+                        </div>
+
+                    </div>
+                    <!-- END #formControls -->
+                </div>
+                <!-- END col-9-->
+
+            </div>
+            <!-- END row -->
+        </div>
+        <!-- END col-10 -->
+    </div>
+    <!-- END row -->
+</div>
+</div>
+{% endblock content %}

@@ -14,7 +14,7 @@ Notificações
         <!-- BEGIN mailbox-toolbar -->
         <div class="mailbox-toolbar">
 
-            <div class="mailbox-toolbar-item"><a href="email_compose.html"
+            <div class="mailbox-toolbar-item"><a href="{% url 'notificacoes:nova_notificacao' %}"
                     class="mailbox-toolbar-link text-primary bg-blue-transparent-1">Nova Mensagem <i
                         class="fa fa-pen fs-12px ms-1"></i></a></div>
         </div>
@@ -53,7 +53,8 @@ Notificações
             <div class="mailbox-content d-none d-lg-block">
                 <div data-scrollbar="true" data-height="100%" data-skip-mobile="true">
                     <div class="mailbox-empty-message">
-                        <div class="mailbox-empty-message-img"><img src="{% static 'plataforma/assets/img/page/email.svg' %}" alt="" /></div>
+                        <div class="mailbox-empty-message-img"><img
+                                src="{% static 'plataforma/assets/img/page/email.svg' %}" alt="" /></div>
                         <div class="mailbox-empty-message-title">Nenhuma mensagem selecionada</div>
                     </div>
                 </div>

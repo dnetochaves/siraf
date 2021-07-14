@@ -13,23 +13,25 @@
     <div class="dropdown-menu dropdown-menu-end dropdown-notification">
         <h6 class="dropdown-header text-gray-900 mb-1">Notificações</h6>
 
-        {% for notificacao in notificacoes %}
+        {% for notificacao_menu in notificacoes_menu %}
         <a href="#" class="dropdown-notification-item">
             <div class="dropdown-notification-icon">
 
-                {% if notificacao.alert == 'd' %}
-                    <i class="fa fa-envelope fa-lg fa-fw text-danger"></i>
-                {% elif notificacao.alert == 's' %}
-                    <i class="fa fa-envelope fa-lg fa-fw text-success"></i>
-                {% elif notificacao.alert == 'w' %}
-                    <i class="fa fa-envelope fa-lg fa-fw text-warning"></i>
+
+                {% if notificacao_menu.alert == 'd' %}
+                <i class="fa fa-envelope fa-lg fa-fw text-danger"></i>
+                {% elif notificacao_menu.alert == 's' %}
+                <i class="fa fa-envelope fa-lg fa-fw text-success"></i>
+                {% elif notificacao_menu.alert == 'w' %}
+                <i class="fa fa-envelope fa-lg fa-fw text-warning"></i>
                 {% endif %}
+
 
 
             </div>
             <div class="dropdown-notification-info">
-                <div class="title">{{ notificacao.text }}</div>
-                <div class="time">{{ notificacao.date }}</div>
+                <div class="title">{{ notificacao_menu.text }}</div>
+                <div class="time">{{ notificacao_menu.date }}</div>
             </div>
             <div class="dropdown-notification-arrow">
                 <i class="fa fa-chevron-right"></i>
