@@ -1,0 +1,80 @@
+{% load static %}
+{% load widget_tweaks %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <title>Studio | Login</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+
+    <!-- ================== BEGIN core-css ================== -->
+    <link href="{% static 'plataforma/assets/css/vendor.min.css' %}" rel="stylesheet" />
+    <link href="{% static 'plataforma/assets/css/app.min.css' %}" rel="stylesheet" />
+    <!-- ================== END core-css ================== -->
+
+</head>
+
+<body>
+    <!-- BEGIN #app -->
+    <div id="app" class="app app-full-height app-without-header">
+        <!-- BEGIN login -->
+        <div class="login">
+            <!-- BEGIN login-content -->
+            <div class="login-content">
+                <form action="" method="POST" name="login_form">
+                    {% csrf_token %}
+                    {% if form.errors %}
+                    <div class="alert alert-danger">
+                        <strong>{{ form.non_field_errors }}</strong>
+                    </div>
+                    {% endif %}
+                    <h1 class="text-center">SIRAF</h1>
+                    <div class="text-muted text-center mb-4">
+                        Para sua proteção, verifique sua identidade.
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Usuário</label>
+                        {{form.username |add_class:"form-control form-control-lg fs-15px"}}
+                    </div>
+                    <div class="mb-3">
+                        <div class="d-flex">
+                            <label class="form-label">Senha</label>
+                            <a href="#" class="ms-auto text-muted">Esqueceu a senha?</a>
+                        </div>
+                        {{form.password|add_class:"form-control form-control-lg fs-15px"}}
+                    </div>
+                    <div class="mb-3">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="customCheck1" />
+                            <label class="form-check-label fw-500" for="customCheck1">Lembrar</label>
+                        </div>
+                    </div>
+                   
+                    <button type="submit" class="btn btn-primary btn-lg d-block w-100 fw-500 mb-3">Entre</button>
+                    <div class="text-center text-muted">
+                        Não tem uma conta ainda? <a href="">Inscrever-se</a>.
+                    </div>
+                  
+                </form>
+            </div>
+            <!-- END login-content -->
+        </div>
+        <!-- END login -->
+
+        <!-- BEGIN btn-scroll-top -->
+        <a href="#" data-click="scroll-top" class="btn-scroll-top fade"><i class="fa fa-arrow-up"></i></a>
+        <!-- END btn-scroll-top -->
+    </div>
+    <!-- END #app -->
+
+    <!-- ================== BEGIN core-js ================== -->
+    <script src="{% static 'plataforma/assets/js/vendor.min.js' %}"></script>
+    <script src="{% static 'plataforma/assets/js/app.min.js' %}"></script>
+    <!-- ================== END core-js ================== -->
+
+</body>
+
+</html>
