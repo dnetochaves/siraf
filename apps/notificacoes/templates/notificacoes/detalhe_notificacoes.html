@@ -1,0 +1,112 @@
+{% extends 'plataforma_base.html' %}
+
+
+
+{% block title %}
+Notificações
+{% endblock title %}
+
+
+{% block content %}
+<div id="content" class="app-content p-0">
+    <!-- BEGIN mailbox -->
+    <div class="mailbox">
+        <!-- BEGIN mailbox-toolbar -->
+        <div class="mailbox-toolbar">
+
+            <div class="mailbox-toolbar-item"><a href="email_compose.html"
+                    class="mailbox-toolbar-link text-primary bg-blue-transparent-1">Nova Mensagem <i
+                        class="fa fa-pen fs-12px ms-1"></i></a></div>
+        </div>
+        <!-- END mailbox-toolbar -->
+        <!-- BEGIN mailbox-body -->
+        <div class="mailbox-body">
+
+            <!-- BEGIN mailbox-sidebar -->
+
+
+
+            <div class="mailbox-sidebar d-none d-lg-block">
+                <div data-scrollbar="true" data-height="100%" data-skip-mobile="true">
+                    <div class="mailbox-list">
+                        {% for notificacao in notificacoes %}
+                        <div class="mailbox-list-item unread has-attachment">
+                            <div class="mailbox-message">
+                                <a href="{% url 'notificacoes:detalhe_notificacao' notificacao.id %}"
+                                    class="mailbox-list-item-link">
+                                    <div class="mailbox-sender">
+                                        <span class="mailbox-sender-name">{{ notificacao.title }}</span>
+                                        <span class="mailbox-time">{{ notificacao.date }}</span>
+                                    </div>
+                                    <div class="mailbox-title">{{ notificacao.user_notificacoes }}</div>
+                                </a>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+
+
+
+            <!-- END mailbox-sidebar -->
+            <!-- BEGIN mailbox-content -->
+
+
+            <div class="mailbox-content">
+                <!-- BEGIN scrollbar -->
+                <div data-scrollbar="true" data-height="100%" data-skip-mobile="true">
+                    <!-- BEGIN mailbox-detail -->
+                    {% for detalhe_notificacao in detalhe_notificacoes %}
+                    <div class="mailbox-detail">
+
+                        <!-- BEGIN mail-detail-header -->
+                        <div class="mailbox-detail-header">
+                            <div class="d-flex">
+                                <a href="#">
+                                    <img src="assets/img/user/user-1.jpg" alt="" width="40" class="rounded-circle" />
+                                </a>
+                                <div class="flex-fill ms-3">
+                                    <div class="d-flex align-items-center">
+                                        <div class="flex-fill">
+                                            <div class="font-weight-600">{{ detalhe_notificacao.message_to }}</div>
+                                            <div class="fs-13px">
+                                                <span class="me-1">para</span> <a href="#"
+                                                    class="text-decoration-none">{{ request.user }}</a>
+                                            </div>
+                                        </div>
+                                        <div class="fs-12px text-muted text-end">{{ detalhe_notificacao.date }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- END mailbox-detail-header -->
+                        <!-- BEGIN mailbox-detail-content -->
+                        <div class="mailbox-detail-content">
+                            <h4 class="mb-3">{{ detalhe_notificacao.user_notificacoes }}</h4>
+
+                            <!-- BEGIN mailbox-detail-body -->
+                            <div class="mailbox-detail-body">
+                                {{ detalhe_notificacao.text }}
+                            </div>
+                            <!-- END mailbox-detail-body -->
+                        </div>
+                        <!-- END mailbox-detail-content -->
+
+                    </div>
+                    <!-- END mailbox-detail -->
+                    {% endfor %}
+                </div>
+                <!-- END scrollbar -->
+            </div>
+
+
+
+
+            <!-- END mailbox-content -->
+        </div>
+        <!-- END mailbox-body -->
+    </div>
+    <!-- END mailbox -->
+</div>
+{% endblock content %}
