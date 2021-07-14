@@ -10,3 +10,9 @@ class Contrato(models.Model):
     validity = models.IntegerField()
     responsible = models.ForeignKey(
         User, on_delete=models.CASCADE, null=True, blank=True, related_name="responsible")
+
+    def listar_contratos():
+        return Contrato.objects.all()
+
+    def __str__(self):
+        return self.company

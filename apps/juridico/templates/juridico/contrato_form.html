@@ -1,0 +1,47 @@
+{% extends 'plataforma_base.html' %}
+{% load static %}
+{% load widget_tweaks %}
+
+
+{% block title %}
+Contratos
+{% endblock title %}
+
+
+{% block content %}
+<!-- BEGIN #content -->
+<div id="content" class="app-content">
+    <!-- BEGIN container -->
+    <div class="container">
+        <!-- BEGIN row -->
+        <form action="" method="post">
+            {% csrf_token %}
+            <div class="row justify-content-center">
+                <div class="mb-3">
+                    <label for="exampleFormControlInput1" class="form-label">Empresa</label>
+                    {{ form.company | add_class:"form-control" }}
+                </div>
+                <div class="mb-3">
+                    <label for="exampleFormControlInput1" class="form-label">Tipo</label>
+                    {{ form.type | add_class:"form-control" }}
+                </div>
+                <div class="mb-3">
+                    <label for="exampleFormControlInput1" class="form-label">Numero</label>
+                    {{ form.number | add_class:"form-control" }}
+                </div>
+                <div class="mb-3">
+                    <label for="exampleFormControlInput1" class="form-label">Numero</label>
+                    {{ form.validity | add_class:"form-control" }}
+                </div>
+                <div class="mb-3">
+                    <label for="exampleFormControlInput1" class="form-label">Numero</label>
+                    {{ form.responsible | add_class:"form-control form-select" }}
+                </div>
+            </div>
+            <button type="submit">salvar</button>
+        </form>
+    </div>
+    <!-- END container -->
+</div>
+<!-- END #content -->
+{% endblock content %}
