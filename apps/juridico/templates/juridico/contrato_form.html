@@ -9,39 +9,46 @@ Contratos
 
 
 {% block content %}
-<!-- BEGIN #content -->
 <div id="content" class="app-content">
-    <!-- BEGIN container -->
-    <div class="container">
-        <!-- BEGIN row -->
-        <form action="" method="post">
-            {% csrf_token %}
-            <div class="row justify-content-center">
-                <div class="mb-3">
-                    <label for="exampleFormControlInput1" class="form-label">Empresa</label>
-                    {{ form.company | add_class:"form-control" }}
+    <div class="card">
+        <div class="card-header">Formulário</div>
+        <div class="card-body">
+            <h5 class="card-title">Formulário</h5>
+            <h6 class="card-subtitle mb-3 text-muted">Cadastro de Contrato</h6>
+            <p class="card-text mb-3">
+            <form action="" method="post">
+                {% csrf_token %}
+                <div class="row">
+                    <div class="col-sm">
+                        <label for="exampleFormControlInput1" class="form-label">Empresa</label>
+                        {{ form.company | add_class:"form-control" }}
+                    </div>
+                    <div class="col-sm">
+                        <label for="exampleFormControlInput1" class="form-label">Tipo</label>
+                        {{ form.type | add_class:"form-control" }}
+                    </div>
                 </div>
-                <div class="mb-3">
-                    <label for="exampleFormControlInput1" class="form-label">Tipo</label>
-                    {{ form.type | add_class:"form-control" }}
+                <div class="row">
+                    <div class="col-sm">
+                        <label for="exampleFormControlInput1" class="form-label">Vigência</label>
+                        {{ form.validity | add_class:"form-control" }}
+                    </div>
+                    <div class="col-sm">
+                        <label for="exampleFormControlInput1" class="form-label">Número</label>
+                        {{ form.number | add_class:"form-control" }}
+                    </div>
                 </div>
-                <div class="mb-3">
-                    <label for="exampleFormControlInput1" class="form-label">Numero</label>
-                    {{ form.number | add_class:"form-control" }}
-                </div>
-                <div class="mb-3">
-                    <label for="exampleFormControlInput1" class="form-label">Numero</label>
-                    {{ form.validity | add_class:"form-control" }}
-                </div>
-                <div class="mb-3">
-                    <label for="exampleFormControlInput1" class="form-label">Numero</label>
-                    {{ form.responsible | add_class:"form-control form-select" }}
-                </div>
+                <hr>
+                <button type="submit" class="btn btn-primary">Salvar</button>
+                <hr>
+            </form>
+            </p>
+            <div>
+                <a href="#" class="card-link">Card link</a>
+                <a href="#" class="card-link">Another link</a>
             </div>
-            <button type="submit">salvar</button>
-        </form>
+        </div>
     </div>
-    <!-- END container -->
 </div>
-<!-- END #content -->
+
 {% endblock content %}

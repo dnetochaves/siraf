@@ -1,0 +1,62 @@
+{% extends 'plataforma_base.html' %}
+
+
+
+{% block title %}
+Juridico
+{% endblock title %}
+
+
+{% block content %}
+<div id="content" class="app-content">
+    <div class="card">
+        <div class="card-header"><i class="fa fa-list"></i></div>
+        <div class="card-body">
+            <h5 class="card-title">Relação</h5>
+            <h6 class="card-subtitle mb-3 text-muted">Contratos</h6>
+            <p class="card-text mb-3">
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Empresa</th>
+                            <th scope="col">Data</th>
+                            <th scope="col">Número</th>
+                            <th scope="col">Vigência</th>
+                            <th scope="col">Responsavel</th>
+                            <th scope="col"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+
+                        {% for listar_contrato in listar_contratos %}
+                        <tr>
+                            <th scope="row">{{ listar_contrato.id }}</th>
+                            <td>{{ listar_contrato.company }}</td>
+                            <td>{{ listar_contrato.date }}</td>
+                            <td>{{ listar_contrato.number }}</td>
+                            <td>{{ listar_contrato.validity }}</td>
+                            <td>{{ listar_contrato.responsible }}</td>
+                            <td>
+                                <div class="btn-group btn-group-sm" role="group" aria-label="...">
+                                    <a href="{% url 'juridico:editar_contrato' listar_contrato.id %}" class="btn btn-warning">Editar</a>
+                                    <a href="{% url 'juridico:deletar_contrato' listar_contrato.id %}" class="btn btn-danger">Excluir</a>
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+
+                    </tbody>
+                </table>
+            </div>
+            </p>
+            <div>
+                <a href="{% url 'juridico:juridico' %}" class="card-link">Voltar</a>
+            </div>
+        </div>
+    </div>
+
+</div>
+{% endblock content %}
