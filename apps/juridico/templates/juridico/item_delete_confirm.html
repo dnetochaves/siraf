@@ -1,0 +1,37 @@
+{% extends 'plataforma_base.html' %}
+{% load static %}
+{% load widget_tweaks %}
+
+
+{% block title %}
+Contratos
+{% endblock title %}
+
+
+{% block content %}
+<div id="content" class="app-content">
+    <div class="card">
+        <div class="card-header">Formulário</div>
+        <div class="card-body">
+            <h5 class="card-title">Formulário</h5>
+            <h6 class="card-subtitle mb-3 text-muted">Excluir de Contrato</h6>
+            <p class="card-text mb-3">
+                <h3>
+                    Tem certeza que deseja excluir o item de número {{ item.item }} bem como todas as informações relacionadas ao mesmo ?
+                </h3>
+            <form action="" method="post">
+                {% csrf_token %}
+                <hr>
+                <button type="submit" class="btn btn-danger">Excluir</button>
+                <hr>
+            </form>
+            </p>
+            <div>
+                <a href="#" class="card-link">Card link</a>
+                <a href="#" class="card-link">Another link</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

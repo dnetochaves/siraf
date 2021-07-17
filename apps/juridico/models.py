@@ -23,7 +23,14 @@ class Item(models.Model):
     item_description = models.TextField(null=True, blank=True)
     unit_price = models.FloatField(null=True, blank=True)
     amount = models.IntegerField(null=True, blank=True)
-    item_contrato = models.ForeignKey(Contrato, on_delete=models.CASCADE, null=True, blank=True)
+    item_contrato = models.ForeignKey(
+        Contrato, on_delete=models.CASCADE, null=True, blank=True)
+
+    def listar_item():
+        return Item.objects.all()
+
+    def listar_item_id(id):
+        return Item.objects.filter(item_contrato=id)
 
     def __str__(self):
         return self.item

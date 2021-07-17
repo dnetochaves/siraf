@@ -1,1 +1,103 @@
-<h1>item_contratos.html</h1>
+{% extends 'plataforma_base.html' %}
+
+
+
+{% block title %}
+Notificações
+{% endblock title %}
+
+
+{% block content %}
+<div id="app" class="app app-content-full-height">
+    <div id="content" class="app-content p-0">
+        <div class="d-block d-md-flex align-items-stretch h-100">
+            <div class="gallery-menu-container">
+                <div data-scrollbar="true" data-height="100%" data-skip-mobile="true">
+                    <center>
+                        <div class="ms-auto btn-group">
+                            <a href="{% url 'juridico:novo_contrato' %}" class="btn btn-default btn-sm"><i
+                                    class="fa fa-plus"></i></a>
+                            <a href="{% url 'juridico:listar_contratos' %}" class="btn btn-default btn-sm"><i
+                                    class="fa fa-list"></i></a>
+                        </div>
+                    </center>
+                    <div class="gallery-menu">
+                        <div class="gallery-menu-header">Contratos</div>
+                        {% for listar_contrato in listar_contratos %}
+                        <div class="gallery-menu-item"><a href="{% url 'juridico:item_contratos' listar_contrato.id %}"
+                                class="gallery-menu-link"><i class="fa fa-fw fa-file me-1"></i>
+                                {{ listar_contrato.company }}</a></div>
+                        {% endfor %}
+
+                    </div>
+                </div>
+            </div>
+            <div class="gallery-content-container">
+                <div data-scrollbar="true" data-height="100%">
+                    <div class="gallery-content">
+                        <div class="gallery">
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="ms-auto btn-group">
+                                    <a href="{% url 'juridico:novo_item' %}" class="btn btn-default btn-sm"><i
+                                            class="fa fa-plus"></i></a>
+                                </div>
+                            </div>
+                            <div class="gallery-image">
+                                <div class="card">
+                                    <div class="card-header"><i class="fa fa-list"></i></div>
+                                    <div class="card-body">
+                                        <h5 class="card-title">Relação</h5>
+                                        <h6 class="card-subtitle mb-3 text-muted">Item</h6>
+                                        <p class="card-text mb-3">
+                                        <div class="table-responsive">
+                                            <table class="table table-hover">
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col">Item</th>
+                                                        <th scope="col">Descrição</th>
+                                                        <th scope="col">Preço Unitário</th>
+                                                        <th scope="col">Quantidade</th>
+                                                        <th scope="col">Contrato</th>
+                                                        <th scope="col"></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    {% for listar_item_id in listar_item_id %}
+                                                    <tr>
+                                                        <th scope="row">{{ listar_item_id.item }}</th>
+                                                        <td>{{ listar_item_id.item_description }}</td>
+                                                        <td>{{ listar_item_id.unit_price }}</td>
+                                                        <td>{{ listar_item_id.amount }}</td>
+                                                        <td>{{ listar_item_id.item_contrato }}</td>
+                                                        <td>
+                                                            <div class="btn-group btn-group-sm" role="group"
+                                                                aria-label="...">
+                                                                <a href="{% url 'juridico:editar_item' listar_item_id.id %}"
+                                                                    class="btn btn-warning"><i
+                                                                        class="fa fa-edit"></i></a>
+                                                                <a href="{% url 'juridico:deletar_item' listar_item_id.id %}" class="btn btn-danger"><i
+                                                                        class="fa fa-trash-alt"></i></a>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    {% empty %}
+                                                    <li>Ainda não foram adcionados itens a esse contrato</li>
+                                                    {% endfor %}
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        </p>
+                                        <div>
+                                            <a href="{% url 'juridico:juridico' %}" class="card-link">Voltar</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

@@ -1,0 +1,61 @@
+{% extends 'plataforma_base.html' %}
+{% load static %}
+{% load widget_tweaks %}
+
+
+{% block title %}
+Item
+{% endblock title %}
+
+
+{% block content %}
+<div id="content" class="app-content">
+    <div class="card">
+        <div class="card-header">Formulário</div>
+        <div class="card-body">
+            <h5 class="card-title">Formulário</h5>
+            <h6 class="card-subtitle mb-3 text-muted">Cadastro de Item</h6>
+            <p class="card-text mb-3">
+            <form action="" method="post">
+                {% csrf_token %}
+                <div class="row">
+                    <div class="col-sm-12">
+                        <label for="exampleFormControlInput1" class="form-label">Item</label>
+                        {{ form.item | add_class:"form-control" }}
+                    </div>
+                    <div class="col-sm-12">
+                        <label for="exampleFormControlInput1" class="form-label">Descrição</label>
+                        {{ form.item_description | add_class:"form-control" }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm">
+                        <label for="exampleFormControlInput1" class="form-label">Valor</label>
+                        {{ form.unit_price | add_class:"form-control" }}
+                    </div>
+                    <div class="col-sm">
+                        <label for="exampleFormControlInput1" class="form-label">Quantidade</label>
+                        {{ form.amount | add_class:"form-control" }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm">
+                        <label for="exampleFormControlInput1" class="form-label">Valor</label>
+                        {{ form.item_contrato | add_class:"form-control" }}
+                    </div>
+                </div>
+
+                <hr>
+                <button type="submit" class="btn btn-success">Salvar</button>
+                <a href="{% url 'juridico:novo_item' %}" class="btn btn-primary">Novo</a>
+                <hr>
+            </form>
+            </p>
+            <div>
+                <a href="#" class="card-link">Voltar</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

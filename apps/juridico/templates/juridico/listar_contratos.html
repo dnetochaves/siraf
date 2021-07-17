@@ -41,8 +41,8 @@ Juridico
                             <td>{{ listar_contrato.responsible }}</td>
                             <td>
                                 <div class="btn-group btn-group-sm" role="group" aria-label="...">
-                                    <a href="{% url 'juridico:editar_contrato' listar_contrato.id %}" class="btn btn-warning">Editar</a>
-                                    <a href="{% url 'juridico:deletar_contrato' listar_contrato.id %}" class="btn btn-danger">Excluir</a>
+                                    <a href="{% url 'juridico:editar_contrato' listar_contrato.id %}" class="btn btn-warning"><i class="fa fa-edit"></i></a>
+                                    <a href="{% url 'juridico:deletar_contrato' listar_contrato.id %}" class="btn btn-danger"><i class="fa fa-trash-alt"></i></a>
                                 </div>
                             </td>
                         </tr>
