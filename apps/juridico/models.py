@@ -16,3 +16,14 @@ class Contrato(models.Model):
 
     def __str__(self):
         return self.company
+
+
+class Item(models.Model):
+    item = models.CharField(max_length=50, null=True, blank=True)
+    item_description = models.CharField(max_length=100, null=True, blank=True)
+    unit_price = models.FloatField(null=True, blank=True)
+    amount = models.IntegerField(null=True, blank=True)
+    item_contrato = models.ForeignKey(Contrato, on_delete=models.CASCADE, null=True, blank=True)
+
+    def __str__(self):
+        return self.item
