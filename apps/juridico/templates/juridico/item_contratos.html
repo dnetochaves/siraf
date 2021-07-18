@@ -11,27 +11,7 @@ Notificações
 <div id="app" class="app app-content-full-height">
     <div id="content" class="app-content p-0">
         <div class="d-block d-md-flex align-items-stretch h-100">
-            <div class="gallery-menu-container">
-                <div data-scrollbar="true" data-height="100%" data-skip-mobile="true">
-                    <center>
-                        <div class="ms-auto btn-group">
-                            <a href="{% url 'juridico:novo_contrato' %}" class="btn btn-default btn-sm"><i
-                                    class="fa fa-plus"></i></a>
-                            <a href="{% url 'juridico:listar_contratos' %}" class="btn btn-default btn-sm"><i
-                                    class="fa fa-list"></i></a>
-                        </div>
-                    </center>
-                    <div class="gallery-menu">
-                        <div class="gallery-menu-header">Contratos</div>
-                        {% for listar_contrato in listar_contratos %}
-                        <div class="gallery-menu-item"><a href="{% url 'juridico:item_contratos' listar_contrato.id %}"
-                                class="gallery-menu-link"><i class="fa fa-fw fa-file me-1"></i>
-                                {{ listar_contrato.company }}</a></div>
-                        {% endfor %}
-
-                    </div>
-                </div>
-            </div>
+            {% include 'partials/plataforma/juridico/_gallery_menu_container.html' %}
             <div class="gallery-content-container">
                 <div data-scrollbar="true" data-height="100%">
                     <div class="gallery-content">
@@ -49,6 +29,7 @@ Notificações
                                         <h5 class="card-title">Relação</h5>
                                         <h6 class="card-subtitle mb-3 text-muted">Item</h6>
                                         <p class="card-text mb-3">
+                                            {% include 'partials/plataforma/_message.html' %}
                                         <div class="table-responsive">
                                             <table class="table table-hover">
                                                 <thead>
@@ -75,7 +56,8 @@ Notificações
                                                                 <a href="{% url 'juridico:editar_item' listar_item_id.id %}"
                                                                     class="btn btn-warning"><i
                                                                         class="fa fa-edit"></i></a>
-                                                                <a href="{% url 'juridico:deletar_item' listar_item_id.id %}" class="btn btn-danger"><i
+                                                                <a href="{% url 'juridico:deletar_item' listar_item_id.id %}"
+                                                                    class="btn btn-danger"><i
                                                                         class="fa fa-trash-alt"></i></a>
                                                             </div>
                                                         </td>

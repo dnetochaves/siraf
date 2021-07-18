@@ -12,28 +12,8 @@ Notificações
 <div id="app" class="app app-content-full-height">
     <div id="content" class="app-content p-0">
         <div class="d-block d-md-flex align-items-stretch h-100">
-            <div class="gallery-menu-container">
-                <div data-scrollbar="true" data-height="100%" data-skip-mobile="true">
-                    <center>
-                        <div class="ms-auto btn-group">
-                            <a href="{% url 'juridico:novo_contrato' %}" class="btn btn-default btn-sm"><i
-                                    class="fa fa-plus"></i></a>
-                            <a href="{% url 'juridico:listar_contratos' %}" class="btn btn-default btn-sm"><i
-                                    class="fa fa-list"></i></a>
-                        </div>
-                    </center>
-                    <div class="gallery-menu">
-                        <div class="gallery-menu-header">Contratos</div>
-                        {% for listar_contrato in listar_contratos %}
-                        <div class="gallery-menu-item"><a href="{% url 'juridico:item_contratos' listar_contrato.id %}"
-                                class="gallery-menu-link"><i class="fa fa-fw fa-file me-1"></i>
-                                {{ listar_contrato.company }}</a></div>
-                        {% endfor %}
-
-                    </div>
-                </div>
-            </div>
-            <div class="gallery-content-container">
+            {% include 'partials/plataforma/juridico/_gallery_menu_container.html' %}
+            <div class="gallery-content-container">   
                 <p class="h1 text-center">Selecione um contrato</p>
             </div>
         </div>

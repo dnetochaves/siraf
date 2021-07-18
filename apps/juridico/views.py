@@ -3,6 +3,7 @@ from django.http import HttpResponseRedirect
 from apps.notificacoes.models import Notificacoes
 from apps.juridico.models import Contrato, Item
 from . forms import ContratoForm, ItemForm
+from django.contrib import messages
 
 
 def juridico(request):
@@ -37,8 +38,10 @@ def novo_item(request):
     notificacoes_menu = Notificacoes.listar_notificacoes_menu(request.user.id)
     form = ItemForm(request.POST or None)
     if form.is_valid():
+        item_contrato = request.POST['item_contrato']
         form.save()
-        return HttpResponseRedirect("/juridico/")
+        messages.success(request, 'Informação salva com sucesso')
+        return HttpResponseRedirect("/juridico/item_contratos/" + str(item_contrato) + "/")
     return render(request, 'juridico/item_form.html',
                   {
                       'form': form,
@@ -88,7 +91,15 @@ def novo_contrato(request):
         formulario = form.save(commit=False)
         formulario.responsible = request.user
         formulario.save()
-        return HttpResponseRedirect("/juridico/")
+        messages.success(request, 'Informação salva com sucesso')
+        # return HttpResponseRedirect("/juridico/")
+        form = ContratoForm()
+        return render(request, 'juridico/contrato_form.html',
+                      {
+                          'form': form,
+                          'qtd_notificacao': qtd_notificacao,
+                          'notificacoes_menu': notificacoes_menu,
+                      })
     return render(request, 'juridico/contrato_form.html',
                   {
                       'form': form,

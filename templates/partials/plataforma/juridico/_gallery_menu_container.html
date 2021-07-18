@@ -1,0 +1,21 @@
+<div class="gallery-menu-container">
+    <div data-scrollbar="true" data-height="100%" data-skip-mobile="true">
+        <center>
+            <div class="ms-auto btn-group">
+                <a href="{% url 'juridico:novo_contrato' %}" class="btn btn-default btn-sm"><i
+                        class="fa fa-plus"></i></a>
+                <a href="{% url 'juridico:listar_contratos' %}" class="btn btn-default btn-sm"><i
+                        class="fa fa-list"></i></a>
+            </div>
+        </center>
+        <div class="gallery-menu">
+            <div class="gallery-menu-header">Contratos</div>
+            {% for listar_contrato in listar_contratos %}
+            <div class="gallery-menu-item"><a href="{% url 'juridico:item_contratos' listar_contrato.id %}"
+                    class="gallery-menu-link"><i class="fa fa-fw fa-file me-1"></i>
+                    {{ listar_contrato.company }}</a></div>
+            {% endfor %}
+
+        </div>
+    </div>
+</div>
