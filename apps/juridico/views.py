@@ -1,8 +1,8 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponseRedirect
 from apps.notificacoes.models import Notificacoes
-from apps.juridico.models import Contrato, Item
-from . forms import ContratoForm, ItemForm
+from apps.juridico.models import Contrato, Item, Tipo
+from . forms import ContratoForm, ItemForm, TipoForm
 from django.contrib import messages
 
 
@@ -147,6 +147,34 @@ def listar_contratos(request):
     return render(request, 'juridico/listar_contratos.html',
                   {
                       'listar_contratos': listar_contratos,
+                      'qtd_notificacao': qtd_notificacao,
+                      'notificacoes_menu': notificacoes_menu,
+                  })
+
+
+def novo_tipo(request):
+    qtd_notificacao = Notificacoes.qtd_notificacoes(request.user.id)
+    notificacoes_menu = Notificacoes.listar_notificacoes_menu(request.user.id)
+    form = TipoForm(request.POST or None)
+    if form.is_valid():
+        form.save()
+        messages.success(request, 'Informação salva com sucesso')
+        return HttpResponseRedirect("/juridico/listar_tipos/")
+    return render(request, 'juridico/tipo_form.html',
+                  {
+                      'form': form,
+                      'qtd_notificacao': qtd_notificacao,
+                      'notificacoes_menu': notificacoes_menu,
+                  })
+
+
+def listar_tipos(request):
+    qtd_notificacao = Notificacoes.qtd_notificacoes(request.user.id)
+    notificacoes_menu = Notificacoes.listar_notificacoes_menu(request.user.id)
+    listar_tipos = Tipo.listar_tipo()
+    return render(request, 'juridico/listar_tipos.html',
+                  {
+                      'listar_tipos': listar_tipos,
                       'qtd_notificacao': qtd_notificacao,
                       'notificacoes_menu': notificacoes_menu,
                   })
