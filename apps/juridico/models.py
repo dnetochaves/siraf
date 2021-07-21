@@ -4,12 +4,14 @@ from django.contrib.auth.models import User
 
 class Contrato(models.Model):
     company = models.CharField(max_length=50)
-    type = models.CharField(max_length=50)
+    type = models.CharField(max_length=50, blank=True, null=True)
     date = models.DateField(auto_now=False, auto_now_add=True)
-    number = models.IntegerField()
-    validity = models.IntegerField()
+    number = models.IntegerField(blank=True, null=True)
+    validity = models.IntegerField(blank=True, null=True)
     responsible = models.ForeignKey(
         User, on_delete=models.CASCADE, null=True, blank=True, related_name="responsible")
+    signature_date = models.DateField(
+        auto_now=False, auto_now_add=False, blank=True, null=True)
 
     def listar_contratos():
         return Contrato.objects.all()

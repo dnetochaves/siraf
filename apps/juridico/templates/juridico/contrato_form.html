@@ -21,22 +21,28 @@ Contratos
                 {% csrf_token %}
                 <div class="row">
                     <div class="col-sm">
-                        <label for="exampleFormControlInput1" class="form-label">Empresa</label>
+                        <label for="exampleFormControlInput1" class="form-label">Empresa:</label>
                         {{ form.company | add_class:"form-control" }}
                     </div>
+                </div>
+                <div class="row">
                     <div class="col-sm">
-                        <label for="exampleFormControlInput1" class="form-label">Tipo</label>
+                        <label for="exampleFormControlInput1" class="form-label">Número:</label>
+                        {{ form.number | add_class:"form-control" }}
+                    </div>
+                    <div class="col-sm">
+                        <label for="exampleFormControlInput1" class="form-label">Tipo:</label>
                         {{ form.type | add_class:"form-control" }}
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-sm">
-                        <label for="exampleFormControlInput1" class="form-label">Vigência</label>
-                        {{ form.validity | add_class:"form-control" }}
+                        <label for="exampleFormControlInput1" class="form-label">Data da Assinatura do Contrato:</label>
+                        {{ form.signature_date | add_class:"form-control" }}
                     </div>
                     <div class="col-sm">
-                        <label for="exampleFormControlInput1" class="form-label">Número</label>
-                        {{ form.number | add_class:"form-control" }}
+                        <label for="exampleFormControlInput1" class="form-label">Vigência:</label>
+                        {{ form.validity | add_class:"form-control" }}
                     </div>
                 </div>
                 <hr>

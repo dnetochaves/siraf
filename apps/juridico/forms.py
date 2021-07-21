@@ -5,7 +5,7 @@ from . models import Contrato, Item
 class ContratoForm(ModelForm):
     class Meta:
         model = Contrato
-        fields = ['company', 'type', 'number', 'validity']
+        fields = ['company', 'type', 'number', 'validity', 'signature_date']
 
 
 class ItemForm(ModelForm):
