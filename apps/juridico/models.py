@@ -2,6 +2,14 @@ from django.db import models
 from django.contrib.auth.models import User
 
 
+class Tipo(models.Model):
+    name = models.CharField(max_length=50)
+    description = models.TextField()
+
+    def __str__(self):
+        return self.name
+
+
 class Contrato(models.Model):
     company = models.CharField(max_length=50)
     type = models.CharField(max_length=50, blank=True, null=True)
@@ -12,6 +20,8 @@ class Contrato(models.Model):
         User, on_delete=models.CASCADE, null=True, blank=True, related_name="responsible")
     signature_date = models.DateField(
         auto_now=False, auto_now_add=False, blank=True, null=True)
+    type_contrato = models.ForeignKey(
+        Tipo, on_delete=models.PROTECT, null=True, blank=True)
 
     def listar_contratos():
         return Contrato.objects.all()
