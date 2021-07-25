@@ -1,4 +1,5 @@
 {% extends 'plataforma_base.html' %}
+{% load filters %}
 
 
 
@@ -51,7 +52,7 @@ Notificações
                                                         <td>{{ listar_item_id.unit_price }}</td>
                                                         <td>{{ listar_item_id.amount }}</td>
                                                         <td class="bg-success text-center">
-                                                            {{ listar_item_id.unit_price | add:listar_item_id.amount  }}
+                                                            {{ listar_item_id.unit_price | soma:listar_item_id.amount }}
                                                         </td>
                                                         <td>{{ listar_item_id.item_contrato }}</td>
                                                         <td>
