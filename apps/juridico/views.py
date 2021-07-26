@@ -178,3 +178,36 @@ def listar_tipos(request):
                       'qtd_notificacao': qtd_notificacao,
                       'notificacoes_menu': notificacoes_menu,
                   })
+
+
+def editar_tipo(request, id):
+    qtd_notificacao = Notificacoes.qtd_notificacoes(request.user.id)
+    notificacoes_menu = Notificacoes.listar_notificacoes_menu(request.user.id)
+    tipo = get_object_or_404(Tipo, pk=id)
+    form = TipoForm(request.POST or None, instance=tipo)
+    if form.is_valid():
+        form.save()
+        return HttpResponseRedirect("/juridico/listar_tipos/")
+        # return render(request, 'juridico/item_form.html', {'form': form})
+    return render(request, 'juridico/tipo_form.html',
+                  {
+                      'form': form,
+                      'qtd_notificacao': qtd_notificacao,
+                      'notificacoes_menu': notificacoes_menu,
+                  })
+
+
+def deletar_tipo(request, id):
+    qtd_notificacao = Notificacoes.qtd_notificacoes(request.user.id)
+    notificacoes_menu = Notificacoes.listar_notificacoes_menu(request.user.id)
+    tipo = get_object_or_404(Tipo, pk=id)
+    form = TipoForm(request.POST or None, instance=tipo)
+    if request.method == 'POST':
+        tipo.delete()
+        return HttpResponseRedirect("/juridico/listar_tipos/")
+    return render(request, 'juridico/tipo_delete_confirm.html',
+                  {
+                      'form': form,
+                      'qtd_notificacao': qtd_notificacao,
+                      'notificacoes_menu': notificacoes_menu,
+                  })
