@@ -41,6 +41,7 @@ class Item(models.Model):
     item_contrato = models.ForeignKey(
         Contrato, on_delete=models.CASCADE, null=True, blank=True)
     sum_value = models.FloatField(null=True, blank=True)
+    sum_value1 = models.FloatField(null=True, blank=True)
 
     def listar_item():
         return Item.objects.all()
