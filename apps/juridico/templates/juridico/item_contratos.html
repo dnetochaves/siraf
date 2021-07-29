@@ -27,7 +27,7 @@ Notificações
                                 <div class="card">
                                     <div class="card-header"><i class="fa fa-list"></i></div>
                                     <div class="card-body">
-                                        <h5 class="card-title">Relação</h5>
+                                        <h5 class="card-title">Valor do Contrato R$ {{ valor_contrato | floatformat:"2g" }}</h5>
                                         <h6 class="card-subtitle mb-3 text-muted">Item</h6>
                                         <p class="card-text mb-3">
                                             {% include 'partials/plataforma/_message.html' %}
@@ -52,7 +52,7 @@ Notificações
                                                         <td>{{ listar_item_id.unit_price }}</td>
                                                         <td>{{ listar_item_id.amount }}</td>
                                                         <td class="bg-success text-center">
-                                                            {{ listar_item_id.unit_price | soma:listar_item_id.amount }}
+                                                            R$ {{ listar_item_id.sum_value | floatformat:"2g" }}
                                                         </td>
                                                         <td>{{ listar_item_id.item_contrato }}</td>
                                                         <td>

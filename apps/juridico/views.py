@@ -24,12 +24,14 @@ def item_contratos(request, id):
     qtd_notificacao = Notificacoes.qtd_notificacoes(request.user.id)
     listar_contratos = Contrato.listar_contratos()
     listar_item_id = Item.listar_item_id(id)
+    valor_contrato = Item.valor_contrato(id)
     return render(request, 'juridico/item_contratos.html',
                   {
                       'notificacoes_menu': notificacoes_menu,
                       'qtd_notificacao': qtd_notificacao,
                       'listar_contratos': listar_contratos,
-                      'listar_item_id': listar_item_id
+                      'listar_item_id': listar_item_id,
+                      'valor_contrato': valor_contrato
                   })
 
 
@@ -39,6 +41,8 @@ def novo_item(request):
     form = ItemForm(request.POST or None)
     if form.is_valid():
         item_contrato = request.POST['item_contrato']
+        formulario = form.save(commit=False)
+        formulario.sum_value = formulario.unit_price * formulario.amount
         form.save()
         messages.success(request, 'Informação salva com sucesso')
         return HttpResponseRedirect("/juridico/item_contratos/" + str(item_contrato) + "/")
@@ -56,6 +60,8 @@ def editar_item(request, id):
     item = get_object_or_404(Item, pk=id)
     form = ItemForm(request.POST or None, instance=item)
     if form.is_valid():
+        formulario = form.save(commit=False)
+        formulario.sum_value = formulario.unit_price * formulario.amount
         form.save()
         # return HttpResponseRedirect("/juridico/item_form.html")
         return render(request, 'juridico/item_form.html', {'form': form})

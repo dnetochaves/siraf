@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.db.models import Sum
 
 
 class Tipo(models.Model):
@@ -48,6 +49,9 @@ class Item(models.Model):
 
     def listar_item_id(id):
         return Item.objects.filter(item_contrato=id)
+
+    def valor_contrato(id_contrato):
+        return Item.objects.filter(item_contrato=id_contrato).aggregate(Sum('sum_value'))['sum_value__sum']
 
     def __str__(self):
         return self.item
