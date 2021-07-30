@@ -19,13 +19,13 @@ Juridico
                 <table class="table table-hover">
                     <thead>
                         <tr>
-                            <th scope="col">#</th>
+                            <th scope="col"></th>
+                            <th scope="col">Data do Cadastro</th>
                             <th scope="col">Empresa</th>
                             <th scope="col">Data da Assinatura</th>
-                            <th scope="col">Data do Cadastro</th>
-                            <th scope="col">Número</th>
-                            <th scope="col">Vigência</th>
+                            <th scope="col">Vigência | Mês</th>
                             <th scope="col">Termino</th>
+                            <th scope="col">Número</th>
                             <th scope="col">Tipo</th>
                             <th scope="col">Responsavel</th>
                             <th scope="col"></th>
@@ -36,13 +36,16 @@ Juridico
 
                         {% for listar_contrato in listar_contratos %}
                         <tr>
-                            <th scope="row">{{ listar_contrato.id }}</th>
+                            <td>
+                                <a href="{% url 'juridico:deletar_contrato' listar_contrato.id %}"
+                                    class="btn btn-secondary"><i class="fa fa-eye"></i></a>
+                            </td>
+                            <td>{{ listar_contrato.date }}</td>
                             <td>{{ listar_contrato.company }}</td>
                             <td>{{ listar_contrato.signature_date }}</td>
-                            <td>{{ listar_contrato.date }}</td>
-                            <td>{{ listar_contrato.number }}</td>
                             <td>{{ listar_contrato.validity }}</td>
                             <td>{{ listar_contrato.end_validity }}</td>
+                            <td>{{ listar_contrato.number }}</td>
                             <td>{{ listar_contrato.type_contrato.name }}</td>
                             <td>{{ listar_contrato.responsible }}</td>
                             <td>
@@ -51,6 +54,8 @@ Juridico
                                         class="btn btn-warning"><i class="fa fa-edit"></i></a>
                                     <a href="{% url 'juridico:deletar_contrato' listar_contrato.id %}"
                                         class="btn btn-danger"><i class="fa fa-trash-alt"></i></a>
+                                    <a href="{% url 'juridico:deletar_contrato' listar_contrato.id %}"
+                                        class="btn btn-secondary"><i class="fa fa-clock"></i></a>
                                 </div>
                             </td>
                         </tr>
