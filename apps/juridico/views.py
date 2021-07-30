@@ -4,6 +4,9 @@ from apps.notificacoes.models import Notificacoes
 from apps.juridico.models import Contrato, Item, Tipo
 from . forms import ContratoForm, ItemForm, TipoForm
 from django.contrib import messages
+from datetime import date
+from dateutil.relativedelta import relativedelta
+from datetime import datetime
 
 
 def juridico(request):
@@ -96,6 +99,9 @@ def novo_contrato(request):
     if form.is_valid():
         formulario = form.save(commit=False)
         formulario.responsible = request.user
+        data1 = six_months = formulario.signature_date + relativedelta(months=+formulario.validity)
+        #print(a)
+        formulario.end_validity = data1
         formulario.save()
         messages.success(request, 'Informação salva com sucesso')
         # return HttpResponseRedirect("/juridico/")
@@ -120,7 +126,11 @@ def editar_contrato(request, id):
     contrato = get_object_or_404(Contrato, pk=id)
     form = ContratoForm(request.POST or None, instance=contrato)
     if form.is_valid():
-        form.save()
+        formulario = form.save(commit=False)
+        data1 = six_months = formulario.signature_date + relativedelta(months=+formulario.validity)
+        #print(a)
+        formulario.end_validity = data1
+        formulario.save()
         return HttpResponseRedirect("/juridico/listar_contratos/")
     return render(request, 'juridico/contrato_form.html',
                   {
