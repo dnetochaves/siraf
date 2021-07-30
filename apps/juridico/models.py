@@ -56,3 +56,14 @@ class Item(models.Model):
 
     def __str__(self):
         return self.item
+
+
+class AditivoPrazo(models.Model):
+    contract = models.ForeignKey(Contrato, on_delete=models.CASCADE, blank=True, null=True)
+    signature_date = models.DateField(
+        auto_now=False, auto_now_add=False, blank=True, null=True)
+    validity = models.IntegerField(blank=True, null=True)
+    end_validity = models.DateField(auto_now=False, auto_now_add=False, null=True, blank=True)
+
+    def __str__(self):
+        return self.contract.company
