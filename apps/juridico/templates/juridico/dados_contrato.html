@@ -1,0 +1,63 @@
+{% extends 'plataforma_base.html' %}
+
+
+
+{% block title %}
+Juridicoss
+{% endblock title %}
+
+
+{% block content %}
+<div id="content" class="app-content">
+    <div class="card">
+        <div class="card-header"><i class="fa fa-list"></i></div>
+        <div class="card-body">
+            <h5 class="card-title">Aditivos do Contrato | R$ {{ valor_contrato | floatformat:"2g" }}</h5>
+            <h6 class="card-subtitle mb-3 text-muted">Aditivo de Prazo</h6>
+            <p class="card-text mb-3">
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th scope="col"></th>
+                            <th scope="col">Contrato</th>
+                            <th scope="col">Data da Assinatura</th>
+                            <th scope="col">Vigência</th>
+                            <th scope="col">Termino</th>
+                            <th scope="col"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+
+                        {% for aditivo_por_contrato in aditivo_por_contrato %}
+                        <tr>
+                            <td>
+                                <a href="" class="btn btn-secondary"><i class="fa fa-eye"></i></a>
+                            </td>
+                            <td>{{ aditivo_por_contrato.contract }}</td>
+                            <td>{{ aditivo_por_contrato.signature_date }}</td>
+                            <td>{{ aditivo_por_contrato.validity }}</td>
+                            <td>{{ aditivo_por_contrato.end_validity }}</td>
+                            <td>
+                                <div class="btn-group btn-group-sm" role="group" aria-label="...">
+                                    <a href="" class="btn btn-warning"><i class="fa fa-edit"></i></a>
+                                    <a href="" class="btn btn-danger"><i class="fa fa-trash-alt"></i></a>
+                                    <a href="" class="btn btn-secondary"><i class="fa fa-clock"></i></a>
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+
+                    </tbody>
+                </table>
+            </div>
+            </p>
+            <div>
+                <a href="{% url 'juridico:juridico' %}" class="card-link">Voltar</a>
+            </div>
+        </div>
+    </div>
+
+</div>
+{% endblock content %}

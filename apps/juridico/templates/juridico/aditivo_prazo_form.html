@@ -1,0 +1,56 @@
+{% extends 'plataforma_base.html' %}
+{% load static %}
+{% load widget_tweaks %}
+
+
+{% block title %}
+Contratos
+{% endblock title %}
+
+
+{% block content %}
+<div id="content" class="app-content">
+    <div class="card">
+        <div class="card-header">Formulário</div>
+        <div class="card-body">
+            <h5 class="card-title">Formulário</h5>
+            <h6 class="card-subtitle mb-3 text-muted">Aditivo de Prazo</h6>
+            {% include 'partials/plataforma/_message.html' %}
+            <p class="card-text mb-3">
+            <form action="" method="post">
+                {% csrf_token %}
+                <div class="row">
+                    <div class="col-sm">
+                        <label for="exampleFormControlInput1" class="form-label">Data do Aditivo:</label>
+                        {{ form.signature_date | add_class:"form-control" }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm">
+                        <label for="exampleFormControlInput1" class="form-label">Vigência | Mês:</label>
+                        {{ form.validity | add_class:"form-control" }}
+                    </div>
+                </div>
+                <hr>
+                <button type="submit" class="btn btn-primary">Salvar</button>
+                <hr>
+            </form>
+            </p>
+            <div>
+                <a href="#" class="card-link">Card link</a>
+                <a href="#" class="card-link">Another link</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
+
+{% block scripts %}
+<script src="{% static 'jquery.mask.min.js' %}"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#id_signature_date').mask('00/00/0000');
+    });
+</script>
+{% endblock scripts %}

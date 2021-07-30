@@ -37,7 +37,7 @@ Juridico
                         {% for listar_contrato in listar_contratos %}
                         <tr>
                             <td>
-                                <a href="{% url 'juridico:deletar_contrato' listar_contrato.id %}"
+                                <a href="{% url 'juridico:dados_contrato' listar_contrato.id %}"
                                     class="btn btn-secondary"><i class="fa fa-eye"></i></a>
                             </td>
                             <td>{{ listar_contrato.date }}</td>
@@ -54,7 +54,7 @@ Juridico
                                         class="btn btn-warning"><i class="fa fa-edit"></i></a>
                                     <a href="{% url 'juridico:deletar_contrato' listar_contrato.id %}"
                                         class="btn btn-danger"><i class="fa fa-trash-alt"></i></a>
-                                    <a href="{% url 'juridico:deletar_contrato' listar_contrato.id %}"
+                                    <a href="{% url 'juridico:novo_aditivo_prazo' listar_contrato.id %}"
                                         class="btn btn-secondary"><i class="fa fa-clock"></i></a>
                                 </div>
                             </td>

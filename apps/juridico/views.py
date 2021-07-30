@@ -1,8 +1,8 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponseRedirect
 from apps.notificacoes.models import Notificacoes
-from apps.juridico.models import Contrato, Item, Tipo
-from . forms import ContratoForm, ItemForm, TipoForm
+from apps.juridico.models import Contrato, Item, Tipo, AditivoPrazo
+from . forms import ContratoForm, ItemForm, TipoForm, AditivoPrazoForm
 from django.contrib import messages
 from datetime import date
 from dateutil.relativedelta import relativedelta
@@ -99,8 +99,9 @@ def novo_contrato(request):
     if form.is_valid():
         formulario = form.save(commit=False)
         formulario.responsible = request.user
-        data1 = six_months = formulario.signature_date + relativedelta(months=+formulario.validity)
-        #print(a)
+        data1 = six_months = formulario.signature_date + \
+            relativedelta(months=+formulario.validity)
+        # print(a)
         formulario.end_validity = data1
         formulario.save()
         messages.success(request, 'Informação salva com sucesso')
@@ -120,6 +121,31 @@ def novo_contrato(request):
                   })
 
 
+def novo_aditivo_prazo(request, id):
+    contrato = get_object_or_404(Contrato, pk=id)
+    qtd_notificacao = Notificacoes.qtd_notificacoes(request.user.id)
+    notificacoes_menu = Notificacoes.listar_notificacoes_menu(request.user.id)
+    form = AditivoPrazoForm(request.POST or None)
+    if form.is_valid():
+        formulario = form.save(commit=False)
+        formulario.contract = contrato
+        data1 = six_months = formulario.signature_date + \
+            relativedelta(months=+formulario.validity)
+        formulario.end_validity = data1
+        form.save()
+        messages.success(request, 'Informação salva com sucesso')
+        return HttpResponseRedirect("/juridico/listar_contratos/")
+    return render(request, 'juridico/aditivo_prazo_form.html',
+                  {
+                      'form': form,
+                      'qtd_notificacao': qtd_notificacao,
+                      'notificacoes_menu': notificacoes_menu,
+                  })
+
+
+    
+
+
 def editar_contrato(request, id):
     qtd_notificacao = Notificacoes.qtd_notificacoes(request.user.id)
     notificacoes_menu = Notificacoes.listar_notificacoes_menu(request.user.id)
@@ -127,8 +153,9 @@ def editar_contrato(request, id):
     form = ContratoForm(request.POST or None, instance=contrato)
     if form.is_valid():
         formulario = form.save(commit=False)
-        data1 = six_months = formulario.signature_date + relativedelta(months=+formulario.validity)
-        #print(a)
+        data1 = six_months = formulario.signature_date + \
+            relativedelta(months=+formulario.validity)
+        # print(a)
         formulario.end_validity = data1
         formulario.save()
         return HttpResponseRedirect("/juridico/listar_contratos/")
@@ -163,6 +190,19 @@ def listar_contratos(request):
     return render(request, 'juridico/listar_contratos.html',
                   {
                       'listar_contratos': listar_contratos,
+                      'qtd_notificacao': qtd_notificacao,
+                      'notificacoes_menu': notificacoes_menu,
+                  })
+
+def dados_contrato(request, id):
+    qtd_notificacao = Notificacoes.qtd_notificacoes(request.user.id)
+    notificacoes_menu = Notificacoes.listar_notificacoes_menu(request.user.id)
+    aditivo_por_contrato = AditivoPrazo.aditivo_por_contrato(id)
+    valor_contrato = Item.valor_contrato(id)
+    return render(request, 'juridico/dados_contrato.html',
+                  {
+                      'aditivo_por_contrato': aditivo_por_contrato,
+                      'valor_contrato': valor_contrato,
                       'qtd_notificacao': qtd_notificacao,
                       'notificacoes_menu': notificacoes_menu,
                   })

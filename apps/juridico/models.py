@@ -65,5 +65,11 @@ class AditivoPrazo(models.Model):
     validity = models.IntegerField(blank=True, null=True)
     end_validity = models.DateField(auto_now=False, auto_now_add=False, null=True, blank=True)
 
+    def listar_aditivo_prazo_contrato(id):
+        return AditivoPrazo.objects.filter(contract=id)
+    
+    def aditivo_por_contrato(id):
+        return AditivoPrazo.objects.filter(contract=id)
+
     def __str__(self):
-        return self.contract.company
+        return str(self.contract)

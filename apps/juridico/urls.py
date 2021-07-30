@@ -5,9 +5,11 @@ app_name = "juridico"
 
 urlpatterns = [
     path('', views.juridico, name="juridico"),
+    path('dados_contrato/<int:id>/', views.dados_contrato, name="dados_contrato"),
     path('item_contratos/<int:id>/', views.item_contratos, name="item_contratos"),
     path('listar_contratos/', views.listar_contratos, name="listar_contratos"),
     path('novo_contrato/', views.novo_contrato, name="novo_contrato"),
+    path('novo_aditivo_prazo/<int:id>/', views.novo_aditivo_prazo, name="novo_aditivo_prazo"),
     path('editar_contrato/<int:id>/', views.editar_contrato, name="editar_contrato"),
     path('deletar_contrato/<int:id>/', views.deletar_contrato, name="deletar_contrato"),
     path('novo_item/', views.novo_item, name="novo_item"),
