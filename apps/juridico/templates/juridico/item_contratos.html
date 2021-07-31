@@ -1,4 +1,4 @@
-{% extends 'plataforma_base.html' %}
+{% extends 'plataforma_base_juridico.html' %}
 {% load filters %}
 
 
@@ -18,16 +18,14 @@ Notificações
                     <div class="gallery-content">
                         <div class="gallery">
                             <div class="d-flex align-items-center mb-3">
-                                <div class="ms-auto btn-group">
-                                    <a href="{% url 'juridico:novo_item' %}" class="btn btn-default btn-sm"><i
-                                            class="fa fa-plus"></i></a>
-                                </div>
+                               
+                                <a class="btn btn-outline-primary" href="{% url 'juridico:novo_item_session' request.session.session_id_contrato %}"><i class="fa fa-plus"></i> Add novo item ao contrato</a>
                             </div>
                             <div class="gallery-image">
                                 <div class="card">
                                     <div class="card-header"><i class="fa fa-list"></i></div>
                                     <div class="card-body">
-                                        <h5 class="card-title">Valor do Contrato R$ {{ valor_contrato | floatformat:"2g" }}</h5>
+                                        <h5 class="card-title">Valor do Contrato R$ {{ valor_contrato | floatformat:"2g"  }}</h5>
                                         <h6 class="card-subtitle mb-3 text-muted">Item</h6>
                                         <p class="card-text mb-3">
                                             {% include 'partials/plataforma/_message.html' %}
@@ -74,9 +72,7 @@ Notificações
                                             </table>
                                         </div>
                                         </p>
-                                        <div>
-                                            <a href="{% url 'juridico:juridico' %}" class="card-link">Voltar</a>
-                                        </div>
+
                                     </div>
                                 </div>
                             </div>

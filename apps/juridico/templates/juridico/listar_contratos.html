@@ -1,4 +1,4 @@
-{% extends 'plataforma_base.html' %}
+{% extends 'plataforma_base_juridico.html' %}
 
 
 
@@ -9,6 +9,10 @@ Juridico
 
 {% block content %}
 <div id="content" class="app-content">
+    <ul class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'juridico:juridico' %}">Inicio</a></li>
+        <li class="breadcrumb-item active">Relação de Contratos</li>
+    </ul>
     <div class="card">
         <div class="card-header"><i class="fa fa-list"></i></div>
         <div class="card-body">
@@ -65,9 +69,7 @@ Juridico
                 </table>
             </div>
             </p>
-            <div>
-                <a href="{% url 'juridico:juridico' %}" class="card-link">Voltar</a>
-            </div>
+           
         </div>
     </div>
 

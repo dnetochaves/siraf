@@ -1,4 +1,4 @@
-{% extends 'plataforma_base.html' %}
+{% extends 'plataforma_base_juridico.html' %}
 {% load static %}
 {% load widget_tweaks %}
 
@@ -10,6 +10,10 @@ Contratos
 
 {% block content %}
 <div id="content" class="app-content">
+    <ul class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'juridico:juridico' %}">Inicio</a></li>
+        <li class="breadcrumb-item active">Cadastro de Tipo</li>
+    </ul>
     <div class="card">
         <div class="card-header">Formulário</div>
         <div class="card-body">
@@ -36,10 +40,7 @@ Contratos
                 <hr>
             </form>
             </p>
-            <div>
-                <a href="#" class="card-link">Card link</a>
-                <a href="#" class="card-link">Another link</a>
-            </div>
+            
         </div>
     </div>
 </div>
