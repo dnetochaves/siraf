@@ -9,22 +9,46 @@ Juridicoss
 
 {% block content %}
 <div id="content" class="app-content">
-    <div class="card">
-        <div class="card-header"><i class="fa fa-list"></i></div>
+    <!-- BEGIN card -->
+    <div class="card mb-3">
+        <!-- BEGIN card-body -->
         <div class="card-body">
-            <h5 class="card-title">Aditivos do Contrato | R$ {{ valor_contrato | floatformat:"2g" }}</h5>
+            <div class="d-flex mb-3">
+                <div class="flex-grow-1">
+                    <h5 class="mb-1">Contrato</h5>
+                    <div>{{ contrato.company }}</div>
+                </div>
+                <a href="#" data-bs-toggle="dropdown" class="text-muted"><i class="fa fa-redo"></i></a>
+            </div>
+
+            <div class="d-flex">
+                <div class="flex-grow-1">
+                    <h3 class="mb-1">Total de itens: {{ total_item_id }}</h3>
+                    <h3 class="mb-1">Valor Total: R${{ valor_contrato | floatformat:"2g" }}</h3>
+
+                </div>
+                <div
+                    class="width-50 height-50 bg-primary-transparent-2 rounded-circle d-flex align-items-center justify-content-center">
+                    <i class="fa fa-file-alt fa-lg text-primary"></i>
+                </div>
+            </div>
+        </div>
+        <!-- END card-body -->
+    </div>
+    <!-- END card -->
+    <div class="card">
+        <div class="card-header"><i class="fa fa-clock"></i></div>
+        <div class="card-body">
+            <h5 class="card-title">Aditivos de Prazo </h5>
             <h6 class="card-subtitle mb-3 text-muted">Aditivo de Prazo</h6>
             <p class="card-text mb-3">
             <div class="table-responsive">
                 <table class="table table-hover">
                     <thead>
                         <tr>
-                            <th scope="col"></th>
-                            <th scope="col">Contrato</th>
                             <th scope="col">Data da Assinatura</th>
                             <th scope="col">Vigência</th>
                             <th scope="col">Termino</th>
-                            <th scope="col"></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -32,20 +56,10 @@ Juridicoss
 
                         {% for aditivo_por_contrato in aditivo_por_contrato %}
                         <tr>
-                            <td>
-                                <a href="" class="btn btn-secondary"><i class="fa fa-eye"></i></a>
-                            </td>
-                            <td>{{ aditivo_por_contrato.contract }}</td>
                             <td>{{ aditivo_por_contrato.signature_date }}</td>
                             <td>{{ aditivo_por_contrato.validity }}</td>
                             <td>{{ aditivo_por_contrato.end_validity }}</td>
-                            <td>
-                                <div class="btn-group btn-group-sm" role="group" aria-label="...">
-                                    <a href="" class="btn btn-warning"><i class="fa fa-edit"></i></a>
-                                    <a href="" class="btn btn-danger"><i class="fa fa-trash-alt"></i></a>
-                                    <a href="" class="btn btn-secondary"><i class="fa fa-clock"></i></a>
-                                </div>
-                            </td>
+
                         </tr>
                         {% endfor %}
 
@@ -53,11 +67,51 @@ Juridicoss
                 </table>
             </div>
             </p>
-            <div>
-                <a href="{% url 'juridico:juridico' %}" class="card-link">Voltar</a>
-            </div>
+
         </div>
     </div>
+    <hr>
+    <div class="card">
+        <div class="card-header"><i class="fa fa-clock"></i></div>
+        <div class="card-body">
+            <h5 class="card-title">Itens do Contrato </h5>
+            <h6 class="card-subtitle mb-3 text-muted">Total de itens do contrato {{ total_item_id }}</h6>
+            <p class="card-text mb-3">
+            <div class="table-responsive">
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th scope="col">Item</th>
+                                <th scope="col">Descrição</th>
+                                <th scope="col">Preço Unitário</th>
+                                <th scope="col">Quantidade</th>
+                                <th scope="col">Valor Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for listar_item_id in listar_item_id %}
+                            <tr>
+                                <th scope="row">{{ listar_item_id.item }}</th>
+                                <td>{{ listar_item_id.item_description }}</td>
+                                <td>{{ listar_item_id.unit_price }}</td>
+                                <td>{{ listar_item_id.amount }}</td>
+                                <td class="bg-teal">
+                                    R$ {{ listar_item_id.sum_value | floatformat:"2g" }}
+                                </td>
+                            </tr>
+                            {% empty %}
+                            <li>Ainda não foram adcionados itens a esse contrato</li>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            </p>
+
+        </div>
+    </div>
+
 
 </div>
 {% endblock content %}

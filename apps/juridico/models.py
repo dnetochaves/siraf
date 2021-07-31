@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-from django.db.models import Sum
+from django.db.models import Sum, Count
 
 
 class Tipo(models.Model):
@@ -30,6 +30,9 @@ class Contrato(models.Model):
 
     def listar_contratos():
         return Contrato.objects.all()
+    
+    def contrato_id(id):
+        return Contrato.objects.get(pk=id)
 
     def __str__(self):
         return self.company
@@ -53,6 +56,9 @@ class Item(models.Model):
 
     def valor_contrato(id_contrato):
         return Item.objects.filter(item_contrato=id_contrato).aggregate(Sum('sum_value'))['sum_value__sum']
+    
+    def total_item_id(id):
+        return Item.objects.filter(item_contrato=id).aggregate(Count('item'))['item__count']
 
     def __str__(self):
         return self.item

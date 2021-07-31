@@ -199,10 +199,16 @@ def dados_contrato(request, id):
     notificacoes_menu = Notificacoes.listar_notificacoes_menu(request.user.id)
     aditivo_por_contrato = AditivoPrazo.aditivo_por_contrato(id)
     valor_contrato = Item.valor_contrato(id)
+    contrato = Contrato.contrato_id(id)
+    listar_item_id = Item.listar_item_id(id)
+    total_item_id = Item.total_item_id(id)
     return render(request, 'juridico/dados_contrato.html',
                   {
                       'aditivo_por_contrato': aditivo_por_contrato,
                       'valor_contrato': valor_contrato,
+                      'contrato': contrato,
+                      'listar_item_id': listar_item_id,
+                      'total_item_id': total_item_id,
                       'qtd_notificacao': qtd_notificacao,
                       'notificacoes_menu': notificacoes_menu,
                   })
