@@ -27,6 +27,7 @@ class Contrato(models.Model):
     type_contrato = models.ForeignKey(
         Tipo, on_delete=models.PROTECT, null=True, blank=True)
     end_validity = models.DateField(auto_now=False, auto_now_add=False, blank=True, null=True)
+    official_diary = models.CharField(max_length=50, blank=True, null=True)
 
     def listar_contratos():
         return Contrato.objects.all()
