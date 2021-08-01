@@ -6,7 +6,7 @@ class ContratoForm(ModelForm):
     class Meta:
         model = Contrato
         fields = ['company', 'number', 'validity',
-                  'signature_date', 'type_contrato']
+                  'signature_date', 'type_contrato', 'official_diary']
 
 
 class ItemForm(ModelForm):
