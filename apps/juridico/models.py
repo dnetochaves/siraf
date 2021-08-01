@@ -18,7 +18,7 @@ class Contrato(models.Model):
     company = models.CharField(max_length=50)
     type = models.CharField(max_length=50, blank=True, null=True)
     date = models.DateField(auto_now=False, auto_now_add=True)
-    number = models.IntegerField(blank=True, null=True)
+    number = models.CharField(max_length=50, blank=True, null=True)
     validity = models.IntegerField(blank=True, null=True)
     responsible = models.ForeignKey(
         User, on_delete=models.CASCADE, null=True, blank=True, related_name="responsible")
