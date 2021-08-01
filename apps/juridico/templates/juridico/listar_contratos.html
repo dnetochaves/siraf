@@ -1,4 +1,5 @@
 {% extends 'plataforma_base_juridico.html' %}
+{% load filters %}
 
 
 
@@ -32,6 +33,7 @@ Juridico
                             <th scope="col">Número</th>
                             <th scope="col">Tipo</th>
                             <th scope="col">Responsavel</th>
+                            <th scope="col">Aditivo de Prazo</th>
                             <th scope="col"></th>
                         </tr>
                     </thead>
@@ -52,6 +54,11 @@ Juridico
                             <td>{{ listar_contrato.number }}</td>
                             <td>{{ listar_contrato.type_contrato.name }}</td>
                             <td>{{ listar_contrato.responsible }}</td>
+                            <td>
+                                <span class="badge bg-info">{{ listar_contrato.id | verificar_aditivo_prazo }}</span>
+                                
+                                    
+                            </td>
                             <td>
                                 <div class="btn-group btn-group-sm" role="group" aria-label="...">
                                     <a href="{% url 'juridico:editar_contrato' listar_contrato.id %}"

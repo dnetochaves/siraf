@@ -57,6 +57,7 @@ def novo_item(request):
                       'notificacoes_menu': notificacoes_menu,
                   })
 
+
 def novo_item_session(request, id):
     contrato = get_object_or_404(Contrato, pk=id)
     qtd_notificacao = Notificacoes.qtd_notificacoes(request.user.id)
@@ -75,6 +76,7 @@ def novo_item_session(request, id):
                       'qtd_notificacao': qtd_notificacao,
                       'notificacoes_menu': notificacoes_menu,
                   })
+
 
 def editar_item(request, id):
     qtd_notificacao = Notificacoes.qtd_notificacoes(request.user.id)
@@ -162,9 +164,6 @@ def novo_aditivo_prazo(request, id):
                   })
 
 
-    
-
-
 def editar_contrato(request, id):
     qtd_notificacao = Notificacoes.qtd_notificacoes(request.user.id)
     notificacoes_menu = Notificacoes.listar_notificacoes_menu(request.user.id)
@@ -212,6 +211,7 @@ def listar_contratos(request):
                       'qtd_notificacao': qtd_notificacao,
                       'notificacoes_menu': notificacoes_menu,
                   })
+
 
 def dados_contrato(request, id):
     qtd_notificacao = Notificacoes.qtd_notificacoes(request.user.id)
