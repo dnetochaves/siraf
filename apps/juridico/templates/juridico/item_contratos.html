@@ -15,11 +15,13 @@ Notificações
             {% include 'partials/plataforma/juridico/_gallery_menu_container.html' %}
             <div class="gallery-content-container">
                 <div data-scrollbar="true" data-height="100%">
+                    <div class="alert alert-info" role="alert">
+                        Você está trabalhando no contrato {{ contrato.company }}
+                      </div>
                     <div class="gallery-content">
                         <div class="gallery">
                             <div class="d-flex align-items-center mb-3">
-                               
-                                <a class="btn btn-outline-primary" href="{% url 'juridico:novo_item_session' request.session.session_id_contrato %}"><i class="fa fa-plus"></i> Add novo item ao contrato</a>
+                                <a class="btn btn-outline-primary" href="{% url 'juridico:novo_item_session' request.session.session_id_contrato %}"><i class="fa fa-plus"></i> Add novo item ao contrato </a>
                             </div>
                             <div class="gallery-image">
                                 <div class="card">
@@ -47,7 +49,7 @@ Notificações
                                                     <tr>
                                                         <th scope="row">{{ listar_item_id.item }}</th>
                                                         <td>{{ listar_item_id.item_description }}</td>
-                                                        <td>{{ listar_item_id.unit_price }}</td>
+                                                        <td>R$ {{ listar_item_id.unit_price | floatformat:"2g" }}</td>
                                                         <td>{{ listar_item_id.amount }}</td>
                                                         <td class="bg-teal text-center">
                                                             R$ {{ listar_item_id.sum_value | floatformat:"2g" }}
@@ -57,8 +59,8 @@ Notificações
                                                             <div class="btn-group btn-group-sm" role="group"
                                                                 aria-label="...">
                                                                 <a href="{% url 'juridico:editar_item' listar_item_id.id %}"
-                                                                    class="btn btn-warning"><i
-                                                                        class="fa fa-edit"></i></a>
+                                                                class="btn btn-warning"><i
+                                                                    class="fa fa-edit"></i></a>
                                                                 <a href="{% url 'juridico:deletar_item' listar_item_id.id %}"
                                                                     class="btn btn-danger"><i
                                                                         class="fa fa-trash-alt"></i></a>

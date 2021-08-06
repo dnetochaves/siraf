@@ -28,6 +28,7 @@ def item_contratos(request, id):
     listar_contratos = Contrato.listar_contratos()
     listar_item_id = Item.listar_item_id(id)
     valor_contrato = Item.valor_contrato(id)
+    contrato = Contrato.contrato_id(id)
     request.session['session_id_contrato'] = id
     return render(request, 'juridico/item_contratos.html',
                   {
@@ -35,7 +36,8 @@ def item_contratos(request, id):
                       'qtd_notificacao': qtd_notificacao,
                       'listar_contratos': listar_contratos,
                       'listar_item_id': listar_item_id,
-                      'valor_contrato': valor_contrato
+                      'valor_contrato': valor_contrato,
+                      'contrato': contrato
                   })
 
 
@@ -82,13 +84,15 @@ def editar_item(request, id):
     qtd_notificacao = Notificacoes.qtd_notificacoes(request.user.id)
     notificacoes_menu = Notificacoes.listar_notificacoes_menu(request.user.id)
     item = get_object_or_404(Item, pk=id)
+    contrato = get_object_or_404(
+        Contrato, pk=request.session['session_id_contrato'])
     form = ItemForm(request.POST or None, instance=item)
     if form.is_valid():
         formulario = form.save(commit=False)
+        formulario.item_contrato = contrato
         formulario.sum_value = formulario.unit_price * formulario.amount
         form.save()
-        # return HttpResponseRedirect("/juridico/item_form.html")
-        return render(request, 'juridico/item_form.html', {'form': form})
+        return HttpResponseRedirect("/juridico/item_contratos/" + str(request.session['session_id_contrato']) + "/")
     return render(request, 'juridico/item_form.html',
                   {
                       'form': form,
@@ -292,3 +296,17 @@ def deletar_tipo(request, id):
                       'qtd_notificacao': qtd_notificacao,
                       'notificacoes_menu': notificacoes_menu,
                   })
+
+
+def deletar_aditivo_praso(request, id):
+    qtd_notificacao = Notificacoes.qtd_notificacoes(request.user.id)
+    notificacoes_menu = Notificacoes.listar_notificacoes_menu(request.user.id)
+    aditivo_prazo = get_object_or_404(AditivoPrazo, pk=id)
+    aditivo_prazo.delete()
+    return HttpResponseRedirect("/juridico/dados_contrato/" + str(aditivo_prazo.contract.id) + "/",
+                                {
+        'qtd_notificacao': qtd_notificacao,
+        'notificacoes_menu': notificacoes_menu,
+    })
+
+   

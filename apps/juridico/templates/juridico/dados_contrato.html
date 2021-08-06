@@ -49,6 +49,7 @@ Juridicoss
                             <th scope="col">Data da Assinatura</th>
                             <th scope="col">Vigência</th>
                             <th scope="col">Termino</th>
+                            <th scope="col"></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -59,6 +60,13 @@ Juridicoss
                             <td>{{ aditivo_por_contrato.signature_date }}</td>
                             <td>{{ aditivo_por_contrato.validity }}</td>
                             <td>{{ aditivo_por_contrato.end_validity }}</td>
+                            <td>
+                                <div class="btn-group btn-group-sm" role="group" aria-label="...">
+                                    
+                                    <a href="{% url 'juridico:deletar_aditivo_praso' aditivo_por_contrato.id %}"
+                                        class="btn btn-danger"><i class="fa fa-trash-alt"></i></a>
+                                </div>
+                            </td>
 
                         </tr>
                         {% endfor %}

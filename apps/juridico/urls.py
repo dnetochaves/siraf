@@ -19,5 +19,6 @@ urlpatterns = [
     path('novo_tipo/', views.novo_tipo, name="novo_tipo"),
     path('listar_tipos/', views.listar_tipos, name="listar_tipos"),
     path('editar_tipo/<int:id>/', views.editar_tipo, name="editar_tipo"),
-    path('deletar_tipo/<int:id>/', views.deletar_tipo, name="deletar_tipo")
+    path('deletar_tipo/<int:id>/', views.deletar_tipo, name="deletar_tipo"),
+    path('deletar_aditivo_praso/<int:id>/', views.deletar_aditivo_praso, name="deletar_aditivo_praso")
 ]
