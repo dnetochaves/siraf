@@ -319,15 +319,15 @@ def novo_aditivo_valor(request, id):
     if form.is_valid():
         formulario = form.save(commit=False)
         formulario.contract = contrato
-        # formulario.aditivo_value = valor_contrato * float(formulario.percentage)
         formulario.aditivo_value = valor_contrato + \
             (valor_contrato * float(formulario.percentage) / 100)
         data1 = six_months = formulario.signature_date + \
             relativedelta(months=+formulario.validity)
-        # print(a)
         formulario.end_validity = data1
         formulario.save()
-        return HttpResponseRedirect("/juridico/configurar_itens_aditivo/" + str(id) + "/")
+        aditivo_valor = AditivoValor.aditivo_value_last()
+        id_aditivo = aditivo_valor.id
+        return HttpResponseRedirect("/juridico/configurar_itens_aditivo/" + str(id) + "/" + str(id_aditivo) + "/")
     return render(request, 'juridico/aditivo_valor_form.html',
                   {
                       'form': form,
@@ -338,12 +338,12 @@ def novo_aditivo_valor(request, id):
                   })
 
 
-def configurar_itens_aditivo(request, id):
+def configurar_itens_aditivo(request, id, id_aditivo):
     contrato = get_object_or_404(Contrato, pk=id)
     qtd_notificacao = Notificacoes.qtd_notificacoes(request.user.id)
     notificacoes_menu = Notificacoes.listar_notificacoes_menu(request.user.id)
     valor_contrato = Item.valor_contrato(id)
-    valor_aditivo = AditivoValor.aditivo_value_last()
+    valor_aditivo = AditivoValor.aditivo_value_id(id_aditivo)
     diferenca = valor_aditivo.aditivo_value - valor_contrato
     return render(request, 'juridico/configurar_itens_aditivo.html',
                   {

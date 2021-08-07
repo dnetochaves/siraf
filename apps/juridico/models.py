@@ -121,6 +121,8 @@ class AditivoValor(models.Model):
     percentage = models.CharField(choices=VALUE_PERCENTAGE, max_length=50)
     aditivo_value = models.FloatField(null=True, blank=True)
 
+    def aditivo_value_id(id_aditivo):
+        return AditivoValor.objects.get(pk=id_aditivo)
     def aditivo_value_last():
         return AditivoValor.objects.last()
 
