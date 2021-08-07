@@ -225,6 +225,7 @@ def dados_contrato(request, id):
     contrato = Contrato.contrato_id(id)
     listar_item_id = Item.listar_item_id(id)
     total_item_id = Item.total_item_id(id)
+    lista_aditivo_valor = AditivoValor.aditivo_value_contract(id)
     return render(request, 'juridico/dados_contrato.html',
                   {
                       'aditivo_por_contrato': aditivo_por_contrato,
@@ -232,6 +233,7 @@ def dados_contrato(request, id):
                       'contrato': contrato,
                       'listar_item_id': listar_item_id,
                       'total_item_id': total_item_id,
+                      'lista_aditivo_valor': lista_aditivo_valor,
                       'qtd_notificacao': qtd_notificacao,
                       'notificacoes_menu': notificacoes_menu,
                   })

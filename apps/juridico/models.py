@@ -26,12 +26,13 @@ class Contrato(models.Model):
         auto_now=False, auto_now_add=False, blank=True, null=True)
     type_contrato = models.ForeignKey(
         Tipo, on_delete=models.PROTECT, null=True, blank=True)
-    end_validity = models.DateField(auto_now=False, auto_now_add=False, blank=True, null=True)
+    end_validity = models.DateField(
+        auto_now=False, auto_now_add=False, blank=True, null=True)
     official_diary = models.CharField(max_length=50, blank=True, null=True)
 
     def listar_contratos():
         return Contrato.objects.all()
-    
+
     def contrato_id(id):
         return Contrato.objects.get(pk=id)
 
@@ -57,7 +58,7 @@ class Item(models.Model):
 
     def valor_contrato(id_contrato):
         return Item.objects.filter(item_contrato=id_contrato).aggregate(Sum('sum_value'))['sum_value__sum']
-    
+
     def total_item_id(id):
         return Item.objects.filter(item_contrato=id).aggregate(Count('item'))['item__count']
 
@@ -66,16 +67,18 @@ class Item(models.Model):
 
 
 class AditivoPrazo(models.Model):
-    contract = models.ForeignKey(Contrato, on_delete=models.CASCADE, blank=True, null=True)
+    contract = models.ForeignKey(
+        Contrato, on_delete=models.CASCADE, blank=True, null=True)
     signature_date = models.DateField(
         auto_now=False, auto_now_add=False, blank=True, null=True)
     validity = models.IntegerField(blank=True, null=True)
-    end_validity = models.DateField(auto_now=False, auto_now_add=False, null=True, blank=True)
+    end_validity = models.DateField(
+        auto_now=False, auto_now_add=False, null=True, blank=True)
     official_diary = models.CharField(max_length=50, blank=True, null=True)
 
     def listar_aditivo_prazo_contrato(id):
         return AditivoPrazo.objects.filter(contract=id)
-    
+
     def aditivo_por_contrato(id):
         return AditivoPrazo.objects.filter(contract=id)
 
@@ -112,17 +115,24 @@ class AditivoValor(models.Model):
         ('25', '25%'),
 
     ]
-    contract = models.ForeignKey(Contrato, on_delete=models.CASCADE, blank=True, null=True)
+    contract = models.ForeignKey(
+        Contrato, on_delete=models.CASCADE, blank=True, null=True)
     signature_date = models.DateField(
         auto_now=False, auto_now_add=False, blank=True, null=True)
     validity = models.IntegerField(blank=True, null=True)
-    end_validity = models.DateField(auto_now=False, auto_now_add=False, null=True, blank=True)
+    end_validity = models.DateField(
+        auto_now=False, auto_now_add=False, null=True, blank=True)
     official_diary = models.CharField(max_length=50, blank=True, null=True)
     percentage = models.CharField(choices=VALUE_PERCENTAGE, max_length=50)
     aditivo_value = models.FloatField(null=True, blank=True)
 
     def aditivo_value_id(id_aditivo):
         return AditivoValor.objects.get(pk=id_aditivo)
+
+    def aditivo_value_contract(id):
+        return AditivoValor.objects.filter(contract=id)
+       
+
     def aditivo_value_last():
         return AditivoValor.objects.last()
 
