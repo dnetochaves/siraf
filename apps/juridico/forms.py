@@ -24,4 +24,4 @@ class TipoForm(ModelForm):
 class AditivoPrazoForm(ModelForm):
     class Meta:
         model = AditivoPrazo
-        fields = ['signature_date', 'validity', ]
+        fields = ['signature_date', 'validity', 'signature_date', 'official_diary' ]
