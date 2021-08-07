@@ -1,8 +1,8 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponseRedirect
 from apps.notificacoes.models import Notificacoes
-from apps.juridico.models import Contrato, Item, Tipo, AditivoPrazo
-from . forms import ContratoForm, ItemForm, TipoForm, AditivoPrazoForm
+from apps.juridico.models import Contrato, Item, Tipo, AditivoPrazo, AditivoValor
+from . forms import ContratoForm, ItemForm, TipoForm, AditivoPrazoForm, AditivoValorForm
 from django.contrib import messages
 from datetime import date
 from dateutil.relativedelta import relativedelta
@@ -309,4 +309,48 @@ def deletar_aditivo_praso(request, id):
         'notificacoes_menu': notificacoes_menu,
     })
 
-   
+
+def novo_aditivo_valor(request, id):
+    contrato = get_object_or_404(Contrato, pk=id)
+    valor_contrato = Item.valor_contrato(id)
+    qtd_notificacao = Notificacoes.qtd_notificacoes(request.user.id)
+    notificacoes_menu = Notificacoes.listar_notificacoes_menu(request.user.id)
+    form = AditivoValorForm(request.POST or None)
+    if form.is_valid():
+        formulario = form.save(commit=False)
+        formulario.contract = contrato
+        # formulario.aditivo_value = valor_contrato * float(formulario.percentage)
+        formulario.aditivo_value = valor_contrato + \
+            (valor_contrato * float(formulario.percentage) / 100)
+        data1 = six_months = formulario.signature_date + \
+            relativedelta(months=+formulario.validity)
+        # print(a)
+        formulario.end_validity = data1
+        formulario.save()
+        return HttpResponseRedirect("/juridico/configurar_itens_aditivo/" + str(id) + "/")
+    return render(request, 'juridico/aditivo_valor_form.html',
+                  {
+                      'form': form,
+                      'qtd_notificacao': qtd_notificacao,
+                      'notificacoes_menu': notificacoes_menu,
+                      'valor_contrato': valor_contrato,
+                      'nome_contrato': contrato.company,
+                  })
+
+
+def configurar_itens_aditivo(request, id):
+    contrato = get_object_or_404(Contrato, pk=id)
+    qtd_notificacao = Notificacoes.qtd_notificacoes(request.user.id)
+    notificacoes_menu = Notificacoes.listar_notificacoes_menu(request.user.id)
+    valor_contrato = Item.valor_contrato(id)
+    valor_aditivo = AditivoValor.aditivo_value_last()
+    diferenca = valor_aditivo.aditivo_value - valor_contrato
+    return render(request, 'juridico/configurar_itens_aditivo.html',
+                  {
+                      'qtd_notificacao': qtd_notificacao,
+                      'notificacoes_menu': notificacoes_menu,
+                      'valor_contrato': valor_contrato,
+                      'valor_aditivo': valor_aditivo,
+                      'diferenca': diferenca,
+                      'nome_contrato': contrato.company,
+                  })

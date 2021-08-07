@@ -1,5 +1,5 @@
 from django.forms import ModelForm
-from . models import Contrato, Item, Tipo, AditivoPrazo
+from . models import Contrato, Item, Tipo, AditivoPrazo, AditivoValor
 
 
 class ContratoForm(ModelForm):
@@ -21,7 +21,15 @@ class TipoForm(ModelForm):
         model = Tipo
         fields = ['name', 'description']
 
+
 class AditivoPrazoForm(ModelForm):
     class Meta:
         model = AditivoPrazo
-        fields = ['signature_date', 'validity', 'signature_date', 'official_diary' ]
+        fields = ['signature_date', 'validity',
+                  'signature_date', 'official_diary']
+
+
+class AditivoValorForm(ModelForm):
+    class Meta:
+        model = AditivoValor
+        fields = ['signature_date', 'validity', 'official_diary', 'percentage']
