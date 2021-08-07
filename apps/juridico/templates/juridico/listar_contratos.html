@@ -10,77 +10,116 @@ Juridico
 
 {% block content %}
 <div id="content" class="app-content">
-    <ul class="breadcrumb">
-        <li class="breadcrumb-item"><a href="{% url 'juridico:juridico' %}">Inicio</a></li>
-        <li class="breadcrumb-item active">Relação de Contratos</li>
-    </ul>
-    <div class="card">
-        <div class="card-header"><i class="fa fa-list"></i></div>
-        <div class="card-body">
-            <h5 class="card-title">Relação</h5>
-            <h6 class="card-subtitle mb-3 text-muted">Contratos</h6>
-            <p class="card-text mb-3">
-            <div class="table-responsive">
-                <table class="table table-hover">
-                    <thead>
-                        <tr>
-                            <th scope="col"></th>
-                            <th scope="col">Data do Cadastro</th>
-                            <th scope="col">Empresa</th>
-                            <th scope="col">Data da Assinatura</th>
-                            <th scope="col">Vigência | Mês</th>
-                            <th scope="col">Termino</th>
-                            <th scope="col">Número</th>
-                            <th scope="col">Diário Ofical</th>
-                            <th scope="col">Tipo</th>
-                            <th scope="col">Responsavel</th>
-                            <th scope="col">Aditivo de Prazo</th>
-                            <th scope="col"></th>
-                        </tr>
-                    </thead>
-                    <tbody>
+    <div class="d-flex align-items-center mb-3">
+        <div>
+            <ul class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{% url 'juridico:juridico' %}">INÍCIO</a></li>
+                <li class="breadcrumb-item active">LISTAR CONTRATOS</li>
+            </ul>
+            <h1 class="page-header mb-0">Contratos</h1>
+        </div>
 
-
-                        {% for listar_contrato in listar_contratos %}
-                        <tr>
-                            <td>
-                                <a href="{% url 'juridico:dados_contrato' listar_contrato.id %}"
-                                    class="btn btn-secondary"><i class="fa fa-eye"></i></a>
-                            </td>
-                            <td>{{ listar_contrato.date }}</td>
-                            <td>{{ listar_contrato.company }}</td>
-                            <td>{{ listar_contrato.signature_date }}</td>
-                            <td>{{ listar_contrato.validity }}</td>
-                            <td>{{ listar_contrato.end_validity }}</td>
-                            <td>{{ listar_contrato.number }}</td>
-                            <td>{{ listar_contrato.official_diary }}</td>
-                            <td>{{ listar_contrato.type_contrato.name }}</td>
-                            <td>{{ listar_contrato.responsible }}</td>
-                            <td>
-                                <span class="badge bg-info">{{ listar_contrato.id | verificar_aditivo_prazo }}</span>
-                                
-                                    
-                            </td>
-                            <td>
-                                <div class="btn-group btn-group-sm" role="group" aria-label="...">
-                                    <a href="{% url 'juridico:editar_contrato' listar_contrato.id %}"
-                                        class="btn btn-warning"><i class="fa fa-edit"></i></a>
-                                    <a href="{% url 'juridico:deletar_contrato' listar_contrato.id %}"
-                                        class="btn btn-danger"><i class="fa fa-trash-alt"></i></a>
-                                    <a href="{% url 'juridico:novo_aditivo_prazo' listar_contrato.id %}"
-                                        class="btn btn-secondary"><i class="fa fa-clock"></i></a>
-                                </div>
-                            </td>
-                        </tr>
-                        {% endfor %}
-
-                    </tbody>
-                </table>
-            </div>
-            </p>
-           
+        <div class="ms-auto">
+            <a href="{% url 'juridico:novo_contrato' %}" class="btn btn-primary"><i
+                    class="fa fa-plus-circle fa-fw me-1"></i> Novo Contrato</a>
         </div>
     </div>
 
+
+
+    <div class="mb-md-4 mb-3 d-md-flex">
+        <div class="mt-md-0 mt-2"><a href="#" class="text-dark text-decoration-none"><i
+                    class="fa fa-download fa-fw me-1 text-muted"></i> Exportar</a></div>
+
+    </div>
+    <div class="card">
+        <ul class="nav nav-tabs nav-tabs-v2 px-4">
+            <li class="nav-item me-3"><a href="#allTab" class="nav-link active px-2" data-bs-toggle="tab">Todos</a></li>
+            <li class="nav-item me-3"><a href="#publishedTab" class="nav-link px-2" data-bs-toggle="tab">Vencidos</a>
+
+        </ul>
+        <div class="tab-content p-4">
+            <div class="tab-pane fade show active" id="allTab">
+                <!-- BEGIN input-group -->
+                <div class="input-group mb-4">
+
+
+
+                </div>
+                <!-- END input-group -->
+
+                <!-- BEGIN table -->
+                <div class="table-responsive">
+                    <table class="table table-hover text-nowrap">
+                        <thead>
+                            <tr>
+                                <th class="border-top-0 pt-0 pb-2"></th>
+                                <th class="border-top-0 pt-0 pb-2"></th>
+                                <th class="border-top-0 pt-0 pb-2">Data do Cadastro </th>
+                                <th class="border-top-0 pt-0 pb-2">Empresa</th>
+                                <th class="border-top-0 pt-0 pb-2">Data da Assinatura</th>
+                                <th class="border-top-0 pt-0 pb-2">Vigência | Mês</th>
+                                <th class="border-top-0 pt-0 pb-2">Termino</th>
+                                <th class="border-top-0 pt-0 pb-2">Número</th>
+                                <th class="border-top-0 pt-0 pb-2">Diário Ofical</th>
+                                <th class="border-top-0 pt-0 pb-2">Tipo</th>
+                                <th class="border-top-0 pt-0 pb-2">Responsavel</th>
+                                <th class="border-top-0 pt-0 pb-2">Aditivo de Prazo</th>
+                                <th class="border-top-0 pt-0 pb-2">Aditivo de Prazo</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            {% for listar_contrato in listar_contratos %}
+
+
+
+                            <tr>
+                                <td class="width-10 align-middle">
+                                    <div class="form-check">
+                                        <input type="checkbox" class="form-check-input" id="product1">
+                                        <label class="form-check-label" for="product1"></label>
+                                    </div>
+                                </td>
+                                <td class="align-middle">
+                                    <a href="{% url 'juridico:dados_contrato' listar_contrato.id %}"
+                                        class="btn btn-secondary"><i class="fa fa-eye"></i></a>
+                                </td>
+                                <td class="align-middle">{{ listar_contrato.date }}</td>
+                                <td class="align-middle">{{ listar_contrato.company }}</td>
+                                <td class="align-middle">{{ listar_contrato.signature_date }}</td>
+                                <td>{{ listar_contrato.validity }}</td>
+                                <td class="py-1 align-middle">{{ listar_contrato.end_validity }}</td>
+                                <td class="align-middle">{{ listar_contrato.number }}</td>
+                                <td class="align-middle">{{ listar_contrato.official_diary }}</td>
+                                <td class="align-middle">{{ listar_contrato.type_contrato.name }}</td>
+                                <td class="align-middle">{{ listar_contrato.responsible }}</td>
+                                <td class="py-1 align-middle"><span
+                                        class="badge bg-gray-100 text-black-transparent-5 px-2 pt-5px pb-5px rounded fs-12px d-inline-flex align-items-center"><i
+                                            class="fa fa-circle text-gray-500 fs-9px fa-fw me-5px"></i>
+                                        {{ listar_contrato.id | verificar_aditivo_prazo }}</span></td>
+                                <td class="align-middle">
+                                    <div class="btn-group btn-group-sm" role="group" aria-label="...">
+                                        <a href="{% url 'juridico:editar_contrato' listar_contrato.id %}"
+                                            class="btn btn-warning"><i class="fa fa-edit"></i></a>
+                                        <a href="{% url 'juridico:deletar_contrato' listar_contrato.id %}"
+                                            class="btn btn-danger"><i class="fa fa-trash-alt"></i></a>
+                                        <a href="{% url 'juridico:novo_aditivo_prazo' listar_contrato.id %}"
+                                            class="btn btn-secondary"><i class="fa fa-clock"></i></a>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            {% endfor %}
+
+                        </tbody>
+                    </table>
+                </div>
+                <!-- END table -->
+
+
+            </div>
+        </div>
+    </div>
 </div>
 {% endblock content %}
