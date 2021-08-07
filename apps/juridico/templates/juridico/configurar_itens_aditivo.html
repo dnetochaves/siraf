@@ -23,7 +23,7 @@ Juridicos
 
                         <div class="d-flex">
                             <div class="flex-grow-1">
-                                <h3 class="mb-1">R$ {{ valor_contrato | floatformat:2}}</h3>
+                                <h3 class="mb-1">R$ {{ valor_contrato  | floatformat:"2g"}}</h3>
 
                             </div>
                             <div
@@ -46,7 +46,7 @@ Juridicos
 
                         <div class="d-flex">
                             <div class="flex-grow-1">
-                                <h3 class="mb-1">R$ {{ valor_aditivo.aditivo_value | floatformat:2}}</h3>
+                                <h3 class="mb-1">R$ {{ valor_aditivo.aditivo_value  | floatformat:"2g"}}</h3>
 
                             </div>
                             <div
@@ -69,7 +69,7 @@ Juridicos
 
                         <div class="d-flex">
                             <div class="flex-grow-1">
-                                <h3 class="mb-1">R$ {{ diferenca | floatformat:2}}</h3>
+                                <h3 class="mb-1">R$ {{ diferenca  | floatformat:"2g"}}</h3>
 
                             </div>
                             <div
