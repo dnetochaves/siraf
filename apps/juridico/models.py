@@ -88,31 +88,31 @@ class AditivoPrazo(models.Model):
 
 class AditivoValor(models.Model):
     VALUE_PERCENTAGE = [
-        ('1', '1%'),
-        ('2', '2%'),
-        ('3', '3%'),
-        ('4', '4%'),
-        ('5', '5%'),
-        ('6', '6%'),
-        ('7', '7%'),
-        ('8', '8%'),
-        ('9', '9%'),
-        ('10', '10%'),
-        ('11', '11%'),
-        ('12', '12%'),
-        ('13', '13%'),
-        ('14', '14%'),
-        ('15', '15%'),
-        ('16', '16%'),
-        ('17', '17%'),
-        ('18', '18%'),
-        ('19', '19%'),
-        ('20', '20%'),
-        ('21', '21%'),
-        ('22', '22%'),
-        ('23', '23%'),
-        ('24', '24%'),
-        ('25', '25%'),
+        (1, '1%'),
+        (2, '2%'),
+        (3, '3%'),
+        (4, '4%'),
+        (5, '5%'),
+        (6, '6%'),
+        (7, '7%'),
+        (8, '8%'),
+        (9, '9%'),
+        (10, '10%'),
+        (11, '11%'),
+        (12, '12%'),
+        (13, '13%'),
+        (14, '14%'),
+        (15, '15%'),
+        (16, '16%'),
+        (17, '17%'),
+        (18, '18%'),
+        (19, '19%'),
+        (20, '20%'),
+        (21, '21%'),
+        (22, '22%'),
+        (23, '23%'),
+        (24, '24%'),
+        (25, '25%'),
 
     ]
     contract = models.ForeignKey(
@@ -123,7 +123,7 @@ class AditivoValor(models.Model):
     end_validity = models.DateField(
         auto_now=False, auto_now_add=False, null=True, blank=True)
     official_diary = models.CharField(max_length=50, blank=True, null=True)
-    percentage = models.CharField(choices=VALUE_PERCENTAGE, max_length=50)
+    percentage = models.FloatField(choices=VALUE_PERCENTAGE, blank=True, null=True)
     aditivo_value = models.FloatField(null=True, blank=True)
 
     def aditivo_value_id(id_aditivo):
@@ -131,6 +131,9 @@ class AditivoValor(models.Model):
 
     def aditivo_value_contract(id):
         return AditivoValor.objects.filter(contract=id)
+
+    def valor_percentage_contract(id):
+        return AditivoValor.objects.filter(contract=id).aggregate(Sum('percentage'))['percentage__sum']
        
 
     def aditivo_value_last():

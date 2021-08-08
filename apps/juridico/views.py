@@ -317,6 +317,7 @@ def novo_aditivo_valor(request, id):
     valor_contrato = Item.valor_contrato(id)
     qtd_notificacao = Notificacoes.qtd_notificacoes(request.user.id)
     notificacoes_menu = Notificacoes.listar_notificacoes_menu(request.user.id)
+    valor_percentage_contract = AditivoValor.valor_percentage_contract(id)
     form = AditivoValorForm(request.POST or None)
     if form.is_valid():
         formulario = form.save(commit=False)
@@ -337,6 +338,7 @@ def novo_aditivo_valor(request, id):
                       'notificacoes_menu': notificacoes_menu,
                       'valor_contrato': valor_contrato,
                       'nome_contrato': contrato.company,
+                      'valor_percentage_contract': valor_percentage_contract,
                   })
 
 
