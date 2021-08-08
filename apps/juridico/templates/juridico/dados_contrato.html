@@ -62,7 +62,7 @@ Juridicoss
                             <td>{{ aditivo_por_contrato.end_validity }}</td>
                             <td>
                                 <div class="btn-group btn-group-sm" role="group" aria-label="...">
-                                    
+
                                     <a href="{% url 'juridico:deletar_aditivo_praso' aditivo_por_contrato.id %}"
                                         class="btn btn-danger"><i class="fa fa-trash-alt"></i></a>
                                 </div>
@@ -82,7 +82,7 @@ Juridicoss
     <div class="card">
         <div class="card-header"><i class="fa fa-money-bill-alt"></i></div>
         <div class="card-body">
-            <h5 class="card-title">Aditivos de Valor  </h5>
+            <h5 class="card-title">Aditivos de Valor </h5>
             <h6 class="card-subtitle mb-3 text-muted">Aditivo de Valor</h6>
             <p class="card-text mb-3">
             <div class="table-responsive">
@@ -109,9 +109,8 @@ Juridicoss
                             <td>{{ lista_aditivo_valor.aditivo_value | floatformat:"2g" }}</td>
                             <td>
                                 <div class="btn-group btn-group-sm" role="group" aria-label="...">
-                                    
-                                    <a href="#"
-                                        class="btn btn-danger"><i class="fa fa-trash-alt"></i></a>
+
+                                    <a href="#" class="btn btn-danger"><i class="fa fa-trash-alt"></i></a>
                                 </div>
                             </td>
 
@@ -151,8 +150,15 @@ Juridicoss
                                 <td>{{ listar_item_id.item_description }}</td>
                                 <td>{{ listar_item_id.unit_price }}</td>
                                 <td>{{ listar_item_id.amount }}</td>
+                                <del></del>
                                 <td class="bg-teal">
-                                    R$ {{ listar_item_id.sum_value | floatformat:"2g" }}
+
+                                    {% if listar_item_id.remove_sum == True %}
+                                    <del>R$ {{ listar_item_id.sum_value | floatformat:"2g" }}</del>
+                                    {% else %}
+                                    {{ listar_item_id.sum_value | floatformat:"2g" }}
+                                    {% endif %}
+
                                 </td>
                             </tr>
                             {% empty %}

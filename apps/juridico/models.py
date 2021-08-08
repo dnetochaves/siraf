@@ -49,6 +49,8 @@ class Item(models.Model):
         Contrato, on_delete=models.CASCADE, null=True, blank=True)
     sum_value = models.FloatField(null=True, blank=True)
     sum_value1 = models.FloatField(null=True, blank=True)
+    remove_sum = models.BooleanField(default=False, null=True, blank=True)
+    pos_aditivo_value = models.BooleanField(default=False, null=True, blank=True)
 
     def listar_item():
         return Item.objects.all()
@@ -57,7 +59,7 @@ class Item(models.Model):
         return Item.objects.filter(item_contrato=id)
 
     def valor_contrato(id_contrato):
-        return Item.objects.filter(item_contrato=id_contrato).aggregate(Sum('sum_value'))['sum_value__sum']
+        return Item.objects.filter(item_contrato=id_contrato, remove_sum=False).aggregate(Sum('sum_value'))['sum_value__sum']
 
     def total_item_id(id):
         return Item.objects.filter(item_contrato=id).aggregate(Count('item'))['item__count']
