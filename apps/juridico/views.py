@@ -321,16 +321,24 @@ def novo_aditivo_valor(request, id):
     form = AditivoValorForm(request.POST or None)
     if form.is_valid():
         formulario = form.save(commit=False)
-        formulario.contract = contrato
-        formulario.aditivo_value = valor_contrato + \
+        if(valor_percentage_contract == None):
+            valor_percentage_contract = 0
+        if(valor_percentage_contract + formulario.percentage <= 25):
+            formulario.contract = contrato
+            formulario.aditivo_value = valor_contrato + \
             (valor_contrato * float(formulario.percentage) / 100)
-        data1 = six_months = formulario.signature_date + \
+            data1 = six_months = formulario.signature_date + \
             relativedelta(months=+formulario.validity)
-        formulario.end_validity = data1
-        formulario.save()
-        aditivo_valor = AditivoValor.aditivo_value_last()
-        id_aditivo = aditivo_valor.id
-        return HttpResponseRedirect("/juridico/configurar_itens_aditivo/" + str(id) + "/" + str(id_aditivo) + "/")
+            formulario.end_validity = data1
+            formulario.save()
+            aditivo_valor = AditivoValor.aditivo_value_last()
+            id_aditivo = aditivo_valor.id
+            return HttpResponseRedirect("/juridico/configurar_itens_aditivo/" + str(id) + "/" + str(id_aditivo) + "/")
+        else:
+            a = 25 - valor_percentage_contract
+            messages.error(request, 'Desculpa! Você usou de um limite de 25%  ' + str(valor_percentage_contract) + '  e restam ' + str(a))
+        
+    
     return render(request, 'juridico/aditivo_valor_form.html',
                   {
                       'form': form,
