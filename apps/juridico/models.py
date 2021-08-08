@@ -51,6 +51,7 @@ class Item(models.Model):
     sum_value1 = models.FloatField(null=True, blank=True)
     remove_sum = models.BooleanField(default=False, null=True, blank=True)
     pos_aditivo_value = models.BooleanField(default=False, null=True, blank=True)
+    identity_aditivo_valor = models.IntegerField(null=True, blank=True)
 
     def listar_item():
         return Item.objects.all()
