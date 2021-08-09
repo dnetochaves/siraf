@@ -60,6 +60,61 @@ def novo_item(request):
                   })
 
 
+def novo_item_aditivo_valor(request):
+    id = request.POST['id_contract']
+    id_aditivo = request.POST['id_aditivo']
+    item = request.POST['item']
+    item_description = request.POST['item_description']
+    unit_price = request.POST['unit_price']
+    amount = request.POST['amount']
+
+    #print(f'id: {id}')
+    #print(f'id_aditivo: {id_aditivo}')
+    #print(f'item: {item}')
+    #print(f'item_description: {item_description}')
+    #print(f'unit_price: {unit_price}')
+    #print(f'amount: {amount}')
+
+    # formulario.sum_value = formulario.unit_price * formulario.amount
+
+    contrato = get_object_or_404(Contrato, pk=id)
+    qtd_notificacao = Notificacoes.qtd_notificacoes(request.user.id)
+    notificacoes_menu = Notificacoes.listar_notificacoes_menu(request.user.id)
+    valor_contrato = Item.valor_contrato(id)
+    listar_item_id = Item.listar_item_id(id)
+    if(valor_contrato == None):
+        valor_contrato = 0
+    valor_aditivo = AditivoValor.aditivo_value_id(id_aditivo)
+    diferenca = valor_aditivo.aditivo_value - valor_contrato
+
+
+    Item.objects.create(
+        item = item,
+        item_description = item_description,
+        unit_price = unit_price,
+        amount = amount,
+        item_contrato = contrato,
+        sum_value = int(unit_price) * int(amount),
+        pos_aditivo_value = True,
+        identity_aditivo_valor = id_aditivo,
+    )
+
+    
+   
+    return render(request, 'juridico/configurar_itens_aditivo.html',
+                  {
+                      'qtd_notificacao': qtd_notificacao,
+                      'notificacoes_menu': notificacoes_menu,
+                      'valor_contrato': valor_contrato,
+                      'valor_aditivo': valor_aditivo,
+                      'diferenca': diferenca,
+                      'nome_contrato': contrato.company,
+                      'listar_item_id': listar_item_id,
+                      'id_contract': id,
+                      'id_aditivo': id_aditivo,
+                  })
+
+
 def novo_item_session(request, id):
     contrato = get_object_or_404(Contrato, pk=id)
     qtd_notificacao = Notificacoes.qtd_notificacoes(request.user.id)
@@ -325,10 +380,15 @@ def novo_aditivo_valor(request, id):
             valor_percentage_contract = 0
         if(valor_percentage_contract + formulario.percentage <= 25):
             formulario.contract = contrato
+            if(valor_contrato == None):
+                valor_contrato = 0
+                messages.error(
+                    request, 'O cantrato que você está tentando fazer uma aditivo de valor não possue itens cadastrados.')
+                return HttpResponseRedirect("/juridico/listar_contratos/")
             formulario.aditivo_value = valor_contrato + \
-            (valor_contrato * float(formulario.percentage) / 100)
+                (valor_contrato * float(formulario.percentage) / 100)
             data1 = six_months = formulario.signature_date + \
-            relativedelta(months=+formulario.validity)
+                relativedelta(months=+formulario.validity)
             formulario.end_validity = data1
             formulario.save()
             aditivo_valor = AditivoValor.aditivo_value_last()
@@ -336,9 +396,9 @@ def novo_aditivo_valor(request, id):
             return HttpResponseRedirect("/juridico/configurar_itens_aditivo/" + str(id) + "/" + str(id_aditivo) + "/")
         else:
             a = 25 - valor_percentage_contract
-            messages.error(request, 'Desculpa! Você usou de um limite de 25%  ' + str(valor_percentage_contract) + '  e restam ' + str(a))
-        
-    
+            messages.error(request, 'Desculpa! Você usou de um limite de 25%  ' +
+                           str(valor_percentage_contract) + '  e restam ' + str(a))
+
     return render(request, 'juridico/aditivo_valor_form.html',
                   {
                       'form': form,
@@ -355,6 +415,9 @@ def configurar_itens_aditivo(request, id, id_aditivo):
     qtd_notificacao = Notificacoes.qtd_notificacoes(request.user.id)
     notificacoes_menu = Notificacoes.listar_notificacoes_menu(request.user.id)
     valor_contrato = Item.valor_contrato(id)
+    listar_item_id = Item.listar_item_id(id)
+    if(valor_contrato == None):
+        valor_contrato = 0
     valor_aditivo = AditivoValor.aditivo_value_id(id_aditivo)
     diferenca = valor_aditivo.aditivo_value - valor_contrato
     return render(request, 'juridico/configurar_itens_aditivo.html',
@@ -365,4 +428,7 @@ def configurar_itens_aditivo(request, id, id_aditivo):
                       'valor_aditivo': valor_aditivo,
                       'diferenca': diferenca,
                       'nome_contrato': contrato.company,
+                      'listar_item_id': listar_item_id,
+                      'id_contract': id,
+                      'id_aditivo': id_aditivo,
                   })

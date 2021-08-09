@@ -15,6 +15,7 @@ urlpatterns = [
     path('editar_contrato/<int:id>/', views.editar_contrato, name="editar_contrato"),
     path('deletar_contrato/<int:id>/', views.deletar_contrato, name="deletar_contrato"),
     path('novo_item/', views.novo_item, name="novo_item"),
+    path('novo_item_aditivo_valor/', views.novo_item_aditivo_valor, name="novo_item_aditivo_valor"),
     path('novo_item_session/<int:id>/', views.novo_item_session, name="novo_item_session"),
     path('editar_item/<int:id>/', views.editar_item, name="editar_item"),
     path('deletar_item/<int:id>/', views.deletar_item, name="deletar_item"),

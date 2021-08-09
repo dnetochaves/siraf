@@ -9,80 +9,184 @@ Juridicos
 
 {% block content %}
 <div id="content" class="app-content">
-    <div class="container">
-        <div class="row">
-            <div class="col">
-                <div class="card mb-3">
-                    <div class="card-body">
-                        <div class="d-flex mb-3">
-                            <div class="flex-grow-1">
-                                <h5 class="mb-1">Valor Original</h5>
-                            </div>
-                            <a href="#" data-bs-toggle="dropdown" class="text-muted"><i class="fa fa-redo"></i></a>
+    <div class="d-flex align-items-center mb-md-3 mb-2">
+        <div class="flex-fill">
+            <ul class="breadcrumb">
+                <li class="breadcrumb-item"><a href="#">Início</a></li>
+                <li class="breadcrumb-item active">Configurar Aditivo Valor</li>
+            </ul>
+
+            <h1 class="page-header mb-0">
+                Contrato: {{ nome_contrato }}
+            </h1>
+        </div>
+        <div class="ms-auto">
+            <a href="#modalAddItem" data-bs-toggle="modal" class="btn btn-primary"><i
+                    class="fa fa-plus-circle me-1"></i> Add Item</a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <div class="card mb-3">
+                <div class="card-body">
+                    <div class="d-flex mb-3">
+                        <div class="flex-grow-1">
+                            <h5 class="mb-1">Valor Original</h5>
                         </div>
+                        <a href="#" data-bs-toggle="dropdown" class="text-muted"><i class="fa fa-redo"></i></a>
+                    </div>
 
-                        <div class="d-flex">
-                            <div class="flex-grow-1">
-                                <h3 class="mb-1">R$ {{ valor_contrato  | floatformat:"2g"}}</h3>
+                    <div class="d-flex">
+                        <div class="flex-grow-1">
+                            <h3 class="mb-1">R$ {{ valor_contrato | floatformat:"2g"}}</h3>
 
-                            </div>
-                            <div
-                                class="width-50 height-50 bg-primary-transparent-2 rounded-circle d-flex align-items-center justify-content-center">
-                                <i class="fa fa-money-bill-alt fa-lg text-primary"></i>
-                            </div>
+                        </div>
+                        <div
+                            class="width-50 height-50 bg-primary-transparent-2 rounded-circle d-flex align-items-center justify-content-center">
+                            <i class="fa fa-money-bill-alt fa-lg text-primary"></i>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col">
-                <div class="card mb-3">
-                    <div class="card-body">
-                        <div class="d-flex mb-3">
-                            <div class="flex-grow-1">
-                                <h5 class="mb-1">Valor com Aditivo</h5>
-                            </div>
-                            <a href="#" data-bs-toggle="dropdown" class="text-muted"><i class="fa fa-redo"></i></a>
+        </div>
+        <div class="col">
+            <div class="card mb-3">
+                <div class="card-body">
+                    <div class="d-flex mb-3">
+                        <div class="flex-grow-1">
+                            <h5 class="mb-1">Valor com Aditivo</h5>
                         </div>
+                        <a href="#" data-bs-toggle="dropdown" class="text-muted"><i class="fa fa-redo"></i></a>
+                    </div>
 
-                        <div class="d-flex">
-                            <div class="flex-grow-1">
-                                <h3 class="mb-1">R$ {{ valor_aditivo.aditivo_value  | floatformat:"2g"}}</h3>
+                    <div class="d-flex">
+                        <div class="flex-grow-1">
+                            <h3 class="mb-1">R$ {{ valor_aditivo.aditivo_value | floatformat:"2g"}}</h3>
 
-                            </div>
-                            <div
-                                class="width-50 height-50 bg-primary-transparent-2 rounded-circle d-flex align-items-center justify-content-center">
-                                <i class="fa fa-money-bill-alt fa-lg text-primary"></i>
-                            </div>
+                        </div>
+                        <div
+                            class="width-50 height-50 bg-primary-transparent-2 rounded-circle d-flex align-items-center justify-content-center">
+                            <i class="fa fa-money-bill-alt fa-lg text-primary"></i>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col">
-                <div class="card mb-3">
-                    <div class="card-body">
-                        <div class="d-flex mb-3">
-                            <div class="flex-grow-1">
-                                <h5 class="mb-1">Diferença</h5>
-                            </div>
-                            <a href="#" data-bs-toggle="dropdown" class="text-muted"><i class="fa fa-redo"></i></a>
+        </div>
+        <div class="col">
+            <div class="card mb-3">
+                <div class="card-body">
+                    <div class="d-flex mb-3">
+                        <div class="flex-grow-1">
+                            <h5 class="mb-1">Diferença</h5>
                         </div>
+                        <a href="#" data-bs-toggle="dropdown" class="text-muted"><i class="fa fa-redo"></i></a>
+                    </div>
 
-                        <div class="d-flex">
-                            <div class="flex-grow-1">
-                                <h3 class="mb-1">R$ {{ diferenca  | floatformat:"2g"}}</h3>
+                    <div class="d-flex">
+                        <div class="flex-grow-1">
+                            <h3 class="mb-1">R$ {{ diferenca | floatformat:"2g"}}</h3>
 
-                            </div>
-                            <div
-                                class="width-50 height-50 bg-primary-transparent-2 rounded-circle d-flex align-items-center justify-content-center">
-                                <i class="fa fa-money-bill-alt fa-lg text-primary"></i>
-                            </div>
+                        </div>
+                        <div
+                            class="width-50 height-50 bg-primary-transparent-2 rounded-circle d-flex align-items-center justify-content-center">
+                            <i class="fa fa-money-bill-alt fa-lg text-primary"></i>
                         </div>
                     </div>
                 </div>
+            </div>
 
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-header"><i class="fa fa-list"></i></div>
+        <div class="card-body">
+            <h5 class="card-title">Itens do Contrato </h5>
+            <h6 class="card-subtitle mb-3 text-muted">Total de itens do contrato {{ total_item_id }}</h6>
+            <p class="card-text mb-3">
+            <div class="table-responsive">
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th scope="col">Item</th>
+                                <th scope="col">Descrição</th>
+                                <th scope="col">Preço Unitário</th>
+                                <th scope="col">Quantidade</th>
+                                <th scope="col">Valor Total</th>
+                                <th scope="col"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for listar_item_id in listar_item_id %}
+                            <tr>
+                                <th scope="row">{{ listar_item_id.item }}</th>
+                                <td>{{ listar_item_id.item_description }}</td>
+                                <td>{{ listar_item_id.unit_price }}</td>
+                                <td>{{ listar_item_id.amount }}</td>
+                                <td class="bg-teal">
+
+                                    {% if listar_item_id.remove_sum == True %}
+                                    <del>R$ {{ listar_item_id.sum_value | floatformat:"2g" }}</del>
+                                    {% else %}
+                                    {{ listar_item_id.sum_value | floatformat:"2g" }}
+                                    {% endif %}
+
+                                </td>
+                                <td class="text-center"> <a href="#" class="btn-sm btn-danger"><i class="fa fa-trash-alt"></i></a></td>
+                            </tr>
+                            {% empty %}
+                            <li>Ainda não foram adcionados itens a esse contrato</li>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            </p>
+
+        </div>
+    </div>
+    <!-- BEGIN modal -->
+    <div class="modal fade" id="modalAddItem">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form action="{% url 'juridico:novo_item_aditivo_valor' %}" method="post">
+                    {% csrf_token %}
+                    <div class="modal-header">
+                        <h5 class="modal-title">Add Item</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <input type="hidden" name="id_contract" value="{{ id_contract }}" class="form-control" />
+                            <input type="hidden" name="id_aditivo" value="{{ id_aditivo }}" class="form-control" />
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Item</label>
+                            <input type="text" name="item" class="form-control" />
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Descrição</label>
+                            <textarea class="form-control" name="item_description" rows="3"></textarea>
+
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Preço Unitário</label>
+                            <input type="text" name="unit_price" class="form-control" />
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Quantidade</label>
+                            <input type="text" name="amount" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <a href="#" class="btn btn-default" data-bs-dismiss="modal">Cancel</a>
+                        <button type="submit" class="btn btn-primary">Create</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
+    <!-- END modal -->
 
 </div>
 {% endblock content %}
