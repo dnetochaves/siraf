@@ -97,19 +97,9 @@ def novo_item_aditivo_valor(request):
         pos_aditivo_value=True,
         identity_aditivo_valor=id_aditivo,
     )
+    return HttpResponseRedirect("/juridico/configurar_itens_aditivo/" + str(id) + "/" + str(id_aditivo) + "/")
 
-    return render(request, 'juridico/configurar_itens_aditivo.html',
-                  {
-                      'qtd_notificacao': qtd_notificacao,
-                      'notificacoes_menu': notificacoes_menu,
-                      'valor_contrato': valor_contrato,
-                      'valor_aditivo': valor_aditivo,
-                      'diferenca': diferenca,
-                      'nome_contrato': contrato.company,
-                      'listar_item_id': listar_item_id,
-                      'id_contract': id,
-                      'id_aditivo': id_aditivo,
-                  })
+    
 
 
 def excluir_item_aditivo_valor(request, id_contract, id_aditivo, id_item):
