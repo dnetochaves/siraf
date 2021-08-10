@@ -132,7 +132,7 @@ Juridicos
                                     {% endif %}
 
                                 </td>
-                                <td class="text-center"> <a href="#" class="btn-sm btn-danger"><i class="fa fa-trash-alt"></i></a></td>
+                                <td class="text-center"> <a href="{% url 'juridico:excluir_item_aditivo_valor' id_contract id_aditivo listar_item_id.id %}" class="btn-sm btn-danger"><i class="fa fa-trash-alt"></i></a></td>
                             </tr>
                             {% empty %}
                             <li>Ainda não foram adcionados itens a esse contrato</li>
@@ -179,8 +179,8 @@ Juridicos
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <a href="#" class="btn btn-default" data-bs-dismiss="modal">Cancel</a>
-                        <button type="submit" class="btn btn-primary">Create</button>
+                        <a href="#" class="btn btn-default" data-bs-dismiss="modal">Voltar</a>
+                        <button type="submit" class="btn btn-primary">Salvar</button>
                     </div>
                 </form>
             </div>

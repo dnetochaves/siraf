@@ -87,20 +87,17 @@ def novo_item_aditivo_valor(request):
     valor_aditivo = AditivoValor.aditivo_value_id(id_aditivo)
     diferenca = valor_aditivo.aditivo_value - valor_contrato
 
-
     Item.objects.create(
-        item = item,
-        item_description = item_description,
-        unit_price = unit_price,
-        amount = amount,
-        item_contrato = contrato,
-        sum_value = int(unit_price) * int(amount),
-        pos_aditivo_value = True,
-        identity_aditivo_valor = id_aditivo,
+        item=item,
+        item_description=item_description,
+        unit_price=unit_price,
+        amount=amount,
+        item_contrato=contrato,
+        sum_value=int(unit_price) * int(amount),
+        pos_aditivo_value=True,
+        identity_aditivo_valor=id_aditivo,
     )
 
-    
-   
     return render(request, 'juridico/configurar_itens_aditivo.html',
                   {
                       'qtd_notificacao': qtd_notificacao,
@@ -113,6 +110,15 @@ def novo_item_aditivo_valor(request):
                       'id_contract': id,
                       'id_aditivo': id_aditivo,
                   })
+
+
+def excluir_item_aditivo_valor(request, id_contract, id_aditivo, id_item):
+    item = get_object_or_404(Item, pk=id_item)
+    item.remove_sum = True
+    item.pos_aditivo_value = True
+    item.identity_aditivo_valor = id_aditivo
+    item.save()
+    return HttpResponseRedirect("/juridico/configurar_itens_aditivo/" + str(id_contract) + "/" + str(id_aditivo) + "/")
 
 
 def novo_item_session(request, id):
