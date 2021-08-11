@@ -23,6 +23,8 @@ Juridicos
         <div class="ms-auto">
             <a href="#modalAddItem" data-bs-toggle="modal" class="btn btn-primary"><i
                     class="fa fa-plus-circle me-1"></i> Add Item</a>
+            <a href="#modalSalvar" data-bs-toggle="modal" class="btn btn-success"><i class="fa fa-check me-1"></i>
+                Salvar</a>
         </div>
     </div>
     <div class="row">
@@ -132,7 +134,9 @@ Juridicos
                                     {% endif %}
 
                                 </td>
-                                <td class="text-center"> <a href="{% url 'juridico:excluir_item_aditivo_valor' id_contract id_aditivo listar_item_id.id %}" class="btn-sm btn-danger"><i class="fa fa-trash-alt"></i></a></td>
+                                <td class="text-center"> <a
+                                        href="{% url 'juridico:excluir_item_aditivo_valor' id_contract id_aditivo listar_item_id.id %}"
+                                        class="btn-sm btn-danger"><i class="fa fa-trash-alt"></i></a></td>
                             </tr>
                             {% empty %}
                             <li>Ainda não foram adcionados itens a esse contrato</li>
@@ -177,6 +181,78 @@ Juridicos
                             <label class="form-label">Quantidade</label>
                             <input type="text" name="amount" class="form-control" />
                         </div>
+                    </div>
+                    <div class="modal-footer">
+                        <a href="#" class="btn btn-default" data-bs-dismiss="modal">Voltar</a>
+                        <button type="submit" class="btn btn-primary">Salvar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- END modal -->
+
+    <!-- BEGIN modal -->
+    <div class="modal fade" id="modalSalvar">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form action="{% url 'juridico:novo_item_aditivo_valor' %}" method="post">
+                    {% csrf_token %}
+                    <div class="modal-header">
+                        <h5 class="modal-title">Salvar Configurações</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <input type="hidden" name="id_contract" value="{{ id_contract }}" class="form-control" />
+                            <input type="hidden" name="id_aditivo" value="{{ id_aditivo }}" class="form-control" />
+                        </div>
+                        <!-- BEGIN card -->
+                        <div class="card">
+                            <div class="card-body">
+                                <!-- title -->
+                                <div class="d-flex align-items-center mb-2">
+                                    <div class="flex-fill font-weight-600 fs-16px"> Contrato: {{ nome_contrato }}</div>
+                                    <a href="#" class="text-decoration-none">View report</a>
+                                </div>
+
+                                <!-- stats -->
+                                <div class="d-flex align-items-center mb-4 h3">
+                                    <div>5.29%</div>
+                                    <small class="fw-400 ms-auto text-success">+83%</small>
+                                </div>
+
+                                <!-- list -->
+                                <div>
+                                    <div class="fs-13px font-weight-600 mb-3">CONVERSION FUNNEL</div>
+                                    <div class="row mb-2">
+                                        <div class="col-6">
+                                            <div>Added to cart</div>
+                                            <div class="text-gray-700 fs-13px">55 session</div>
+                                        </div>
+                                        <div class="col-3 text-center">25.28%</div>
+                                        <div class="col-3 text-center"><span class="text-danger">-</span> 5%</div>
+                                    </div>
+                                    <div class="row mb-2">
+                                        <div class="col-6">
+                                            <div>Reached checkout</div>
+                                            <div class="text-gray-700 fs-13px">25 session</div>
+                                        </div>
+                                        <div class="col-3 text-center">15.28%</div>
+                                        <div class="col-3 text-center"><span class="text-success">+</span> 82%</div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <div>Sessions converted</div>
+                                            <div class="text-gray-700 fs-13px">5 session</div>
+                                        </div>
+                                        <div class="col-3 text-center">5.28%</div>
+                                        <div class="col-3 text-center"><span class="text-success">+</span> 82%</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- END card -->
                     </div>
                     <div class="modal-footer">
                         <a href="#" class="btn btn-default" data-bs-dismiss="modal">Voltar</a>

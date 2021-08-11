@@ -59,6 +59,9 @@ def novo_item(request):
                       'notificacoes_menu': notificacoes_menu,
                   })
 
+# TODO Refazer o cálculo  feito na view novo_aditivo_valor nessa  view também
+# formulario.aditivo_value = valor_contrato + \  (valor_contrato * float(formulario.percentage) / 100)
+
 
 def novo_item_aditivo_valor(request):
     id = request.POST['id_contract']
@@ -67,6 +70,13 @@ def novo_item_aditivo_valor(request):
     item_description = request.POST['item_description']
     unit_price = request.POST['unit_price']
     amount = request.POST['amount']
+
+  
+   
+
+   
+
+    
 
     #print(f'id: {id}')
     #print(f'id_aditivo: {id_aditivo}')
@@ -97,9 +107,14 @@ def novo_item_aditivo_valor(request):
         pos_aditivo_value=True,
         identity_aditivo_valor=id_aditivo,
     )
-    return HttpResponseRedirect("/juridico/configurar_itens_aditivo/" + str(id) + "/" + str(id_aditivo) + "/")
 
-    
+    adititvo_valor = get_object_or_404(AditivoValor, pk=id_aditivo)
+    valor_contrato = Item.valor_contrato(id)
+    adititvo_valor.aditivo_value = valor_contrato + (valor_contrato * float(adititvo_valor.percentage) / 100)
+    print(adititvo_valor.aditivo_value)
+
+    adititvo_valor.save()
+    return HttpResponseRedirect("/juridico/configurar_itens_aditivo/" + str(id) + "/" + str(id_aditivo) + "/")
 
 
 def excluir_item_aditivo_valor(request, id_contract, id_aditivo, id_item):
@@ -108,6 +123,13 @@ def excluir_item_aditivo_valor(request, id_contract, id_aditivo, id_item):
     item.pos_aditivo_value = True
     item.identity_aditivo_valor = id_aditivo
     item.save()
+
+    adititvo_valor = get_object_or_404(AditivoValor, pk=id_aditivo)
+    valor_contrato = Item.valor_contrato(id_contract)
+    adititvo_valor.aditivo_value = valor_contrato + (valor_contrato * float(adititvo_valor.percentage) / 100)
+    print(adititvo_valor.aditivo_value)
+
+    adititvo_valor.save()
     return HttpResponseRedirect("/juridico/configurar_itens_aditivo/" + str(id_contract) + "/" + str(id_aditivo) + "/")
 
 
@@ -368,19 +390,22 @@ def novo_aditivo_valor(request, id):
     valor_contrato = Item.valor_contrato(id)
     qtd_notificacao = Notificacoes.qtd_notificacoes(request.user.id)
     notificacoes_menu = Notificacoes.listar_notificacoes_menu(request.user.id)
+
+    # TODO pega o valor total das porventagem de cada aditivo feito. Melhorar nome da variavel
     valor_percentage_contract = AditivoValor.valor_percentage_contract(id)
+
     form = AditivoValorForm(request.POST or None)
     if form.is_valid():
         formulario = form.save(commit=False)
         if(valor_percentage_contract == None):
             valor_percentage_contract = 0
         if(valor_percentage_contract + formulario.percentage <= 25):
-            formulario.contract = contrato
             if(valor_contrato == None):
                 valor_contrato = 0
                 messages.error(
                     request, 'O cantrato que você está tentando fazer uma aditivo de valor não possue itens cadastrados.')
                 return HttpResponseRedirect("/juridico/listar_contratos/")
+            formulario.contract = contrato
             formulario.aditivo_value = valor_contrato + \
                 (valor_contrato * float(formulario.percentage) / 100)
             data1 = six_months = formulario.signature_date + \
@@ -415,7 +440,7 @@ def configurar_itens_aditivo(request, id, id_aditivo):
     if(valor_contrato == None):
         valor_contrato = 0
     valor_aditivo = AditivoValor.aditivo_value_id(id_aditivo)
-    diferenca = valor_aditivo.aditivo_value - valor_contrato
+    diferenca = valor_aditivo.aditivo_value - valor_contrato 
     return render(request, 'juridico/configurar_itens_aditivo.html',
                   {
                       'qtd_notificacao': qtd_notificacao,
