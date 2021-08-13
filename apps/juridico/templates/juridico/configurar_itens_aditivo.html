@@ -33,7 +33,7 @@ Juridicos
                 <div class="card-body">
                     <div class="d-flex mb-3">
                         <div class="flex-grow-1">
-                            <h5 class="mb-1">Valor Original</h5>
+                            <h5 class="mb-1">Valor do Contrato</h5>
                         </div>
                         <a href="#" data-bs-toggle="dropdown" class="text-muted"><i class="fa fa-redo"></i></a>
                     </div>
@@ -51,6 +51,33 @@ Juridicos
                 </div>
             </div>
         </div>
+        <div class="col">
+            <div class="card mb-3">
+                <div class="card-body">
+                    <div class="d-flex mb-3">
+                        <div class="flex-grow-1">
+                            <h5 class="mb-1">Valor da porcentagem aplicada ao aditivo</h5>
+                        </div>
+                        <a href="#" data-bs-toggle="dropdown" class="text-muted"><i class="fa fa-redo"></i></a>
+                    </div>
+
+                    <div class="d-flex">
+                        <div class="flex-grow-1">
+                            <h3 class="mb-1">R$ {{ valor_aditivo.percentage |  floatformat:"0g"}}</h3>
+
+                        </div>
+                        <div
+                            class="width-50 height-50 bg-primary-transparent-2 rounded-circle d-flex align-items-center justify-content-center">
+                            <i class="fa fa-percent fa-lg text-primary"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+       
+    </div>
+    <div class="row">
+        
         <div class="col">
             <div class="card mb-3">
                 <div class="card-body">
@@ -125,10 +152,20 @@ Juridicos
                                 <td>{{ listar_item_id.item_description }}</td>
                                 <td>{{ listar_item_id.unit_price }}</td>
                                 <td>{{ listar_item_id.amount }}</td>
-                                <td class="bg-teal">
+                                <td class="">
 
                                     {% if listar_item_id.remove_sum == True %}
-                                    <del>R$ {{ listar_item_id.sum_value | floatformat:"2g" }}</del>
+                                    <span
+                                        class="badge bg-danger-transparent-3 text-black-transparent-5 px-2 pt-5px pb-5px rounded fs-12px d-inline-flex align-items-center">
+                                        <i class="fa fa-circle fs-9px fa-fw me-5px text-danger-transparent-8"></i><del>R$
+                                            {{ listar_item_id.sum_value | floatformat:"2g" }} </del>: Excluido
+                                    </span>
+                                    {% elif listar_item_id.pos_aditivo_value == True %}
+                                    <span
+                                        class="badge bg-primary-transparent-3 text-black-transparent-5 px-2 pt-5px pb-5px rounded fs-12px d-inline-flex align-items-center">
+                                        <i class="fa fa-circle fs-9px fa-fw me-5px text-primary-transparent-8"></i>R$
+                                        {{ listar_item_id.sum_value | floatformat:"2g" }} : Aditivo de Valor
+                                    </span>
                                     {% else %}
                                     {{ listar_item_id.sum_value | floatformat:"2g" }}
                                     {% endif %}

@@ -151,10 +151,20 @@ Juridicoss
                                 <td>{{ listar_item_id.unit_price }}</td>
                                 <td>{{ listar_item_id.amount }}</td>
                                 <del></del>
-                                <td class="bg-teal">
+                                <td class="">
 
                                     {% if listar_item_id.remove_sum == True %}
-                                    <del>R$ {{ listar_item_id.sum_value | floatformat:"2g" }}</del>
+                                    <span
+                                        class="badge bg-danger-transparent-3 text-black-transparent-5 px-2 pt-5px pb-5px rounded fs-12px d-inline-flex align-items-center">
+                                        <i class="fa fa-circle fs-9px fa-fw me-5px text-danger-transparent-8"></i><del>R$
+                                            {{ listar_item_id.sum_value | floatformat:"2g" }} </del>: Excluido
+                                    </span>
+                                    {% elif listar_item_id.pos_aditivo_value == True %}
+                                    <span
+                                        class="badge bg-primary-transparent-3 text-black-transparent-5 px-2 pt-5px pb-5px rounded fs-12px d-inline-flex align-items-center">
+                                        <i class="fa fa-circle fs-9px fa-fw me-5px text-primary-transparent-8"></i>R$
+                                        {{ listar_item_id.sum_value | floatformat:"2g" }} : Aditivo de Valor
+                                    </span>
                                     {% else %}
                                     {{ listar_item_id.sum_value | floatformat:"2g" }}
                                     {% endif %}

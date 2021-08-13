@@ -109,11 +109,11 @@ def novo_item_aditivo_valor(request):
     )
 
     adititvo_valor = get_object_or_404(AditivoValor, pk=id_aditivo)
-    valor_contrato = Item.valor_contrato(id)
-    adititvo_valor.aditivo_value = valor_contrato + (valor_contrato * float(adititvo_valor.percentage) / 100)
-    print(adititvo_valor.aditivo_value)
+    #valor_contrato = Item.valor_contrato(id)
+    #adititvo_valor.aditivo_value = valor_contrato + (valor_contrato * float(adititvo_valor.percentage) / 100)
+    #print(adititvo_valor.aditivo_value)
 
-    adititvo_valor.save()
+    #adititvo_valor.save()
     return HttpResponseRedirect("/juridico/configurar_itens_aditivo/" + str(id) + "/" + str(id_aditivo) + "/")
 
 
