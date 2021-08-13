@@ -70,32 +70,26 @@ def novo_item_aditivo_valor(request):
     item_description = request.POST['item_description']
     unit_price = request.POST['unit_price']
     amount = request.POST['amount']
-
-  
-   
-
-   
-
-    
-
-    #print(f'id: {id}')
-    #print(f'id_aditivo: {id_aditivo}')
-    #print(f'item: {item}')
-    #print(f'item_description: {item_description}')
-    #print(f'unit_price: {unit_price}')
-    #print(f'amount: {amount}')
-
-    # formulario.sum_value = formulario.unit_price * formulario.amount
+    diferenca = request.POST['diferenca']
+    total = float(unit_price) * float(amount)
 
     contrato = get_object_or_404(Contrato, pk=id)
-    qtd_notificacao = Notificacoes.qtd_notificacoes(request.user.id)
-    notificacoes_menu = Notificacoes.listar_notificacoes_menu(request.user.id)
+    #qtd_notificacao = Notificacoes.qtd_notificacoes(request.user.id)
+    #notificacoes_menu = Notificacoes.listar_notificacoes_menu(request.user.id)
     valor_contrato = Item.valor_contrato(id)
     listar_item_id = Item.listar_item_id(id)
     if(valor_contrato == None):
         valor_contrato = 0
     valor_aditivo = AditivoValor.aditivo_value_id(id_aditivo)
-    diferenca = valor_aditivo.aditivo_value - valor_contrato
+
+    if(float(diferenca.replace(',', '.')) < float(total)):
+        messages.error(request, 'O valor do item que você está tentando adcionar ao aditivo é maior que o saldo restante')
+    else:
+        aditivo = get_object_or_404(AditivoValor, pk=id_aditivo)
+        aditivo.difference = float(diferenca.replace(',', '.')) - total
+        aditivo.save()
+        messages.success(request, 'Item adcionado')
+
 
     Item.objects.create(
         item=item,
@@ -108,12 +102,12 @@ def novo_item_aditivo_valor(request):
         identity_aditivo_valor=id_aditivo,
     )
 
-    adititvo_valor = get_object_or_404(AditivoValor, pk=id_aditivo)
+    #adititvo_valor = get_object_or_404(AditivoValor, pk=id_aditivo)
     #valor_contrato = Item.valor_contrato(id)
     #adititvo_valor.aditivo_value = valor_contrato + (valor_contrato * float(adititvo_valor.percentage) / 100)
-    #print(adititvo_valor.aditivo_value)
+    # print(adititvo_valor.aditivo_value)
 
-    #adititvo_valor.save()
+    # adititvo_valor.save()
     return HttpResponseRedirect("/juridico/configurar_itens_aditivo/" + str(id) + "/" + str(id_aditivo) + "/")
 
 
@@ -126,7 +120,8 @@ def excluir_item_aditivo_valor(request, id_contract, id_aditivo, id_item):
 
     adititvo_valor = get_object_or_404(AditivoValor, pk=id_aditivo)
     valor_contrato = Item.valor_contrato(id_contract)
-    adititvo_valor.aditivo_value = valor_contrato + (valor_contrato * float(adititvo_valor.percentage) / 100)
+    adititvo_valor.aditivo_value = valor_contrato + \
+        (valor_contrato * float(adititvo_valor.percentage) / 100)
     print(adititvo_valor.aditivo_value)
 
     adititvo_valor.save()
@@ -406,15 +401,23 @@ def novo_aditivo_valor(request, id):
                     request, 'O cantrato que você está tentando fazer uma aditivo de valor não possue itens cadastrados.')
                 return HttpResponseRedirect("/juridico/listar_contratos/")
             formulario.contract = contrato
-            #TODO Refatorar codigo (criar uma funcao separada)
+
+            # TODO Refatorar codigo (criar uma funcao separada)
             formulario.aditivo_value = valor_contrato + \
                 (valor_contrato * float(formulario.percentage) / 100)
+
+            formulario.difference = valor_contrato - valor_contrato + \
+                (valor_contrato * float(formulario.percentage) / 100)
+
             data1 = formulario.signature_date + \
                 relativedelta(months=+formulario.validity)
             formulario.end_validity = data1
+
             formulario.save()
+
             aditivo_valor = AditivoValor.aditivo_value_last()
             id_aditivo = aditivo_valor.id
+
             return HttpResponseRedirect("/juridico/configurar_itens_aditivo/" + str(id) + "/" + str(id_aditivo) + "/")
         else:
             a = 25 - valor_percentage_contract
@@ -441,7 +444,8 @@ def configurar_itens_aditivo(request, id, id_aditivo):
     if(valor_contrato == None):
         valor_contrato = 0
     valor_aditivo = AditivoValor.aditivo_value_id(id_aditivo)
-    diferenca = valor_aditivo.aditivo_value - valor_contrato 
+    # valor_aditivo.aditivo_value - valor_contrato
+    diferenca = valor_aditivo.difference
     return render(request, 'juridico/configurar_itens_aditivo.html',
                   {
                       'qtd_notificacao': qtd_notificacao,

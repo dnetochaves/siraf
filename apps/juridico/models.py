@@ -66,6 +66,9 @@ class Item(models.Model):
     def total_item_id(id):
         return Item.objects.filter(item_contrato=id).aggregate(Count('item'))['item__count']
 
+    def listar_item_aditivo_id(id):
+        return Item.objects.filter(identity_aditivo_valor=id)
+
     def __str__(self):
         return self.item
 
@@ -139,7 +142,7 @@ class AditivoValor(models.Model):
 
     def valor_percentage_contract(id):
         return AditivoValor.objects.filter(contract=id).aggregate(Sum('percentage'))['percentage__sum']
-       
+    
 
     def aditivo_value_last():
         return AditivoValor.objects.last()
