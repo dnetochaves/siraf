@@ -129,6 +129,7 @@ class AditivoValor(models.Model):
     official_diary = models.CharField(max_length=50, blank=True, null=True)
     percentage = models.FloatField(choices=VALUE_PERCENTAGE, blank=True, null=True)
     aditivo_value = models.FloatField(null=True, blank=True)
+    difference = models.FloatField(null=True, blank=True)
 
     def aditivo_value_id(id_aditivo):
         return AditivoValor.objects.get(pk=id_aditivo)

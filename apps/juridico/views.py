@@ -406,9 +406,10 @@ def novo_aditivo_valor(request, id):
                     request, 'O cantrato que você está tentando fazer uma aditivo de valor não possue itens cadastrados.')
                 return HttpResponseRedirect("/juridico/listar_contratos/")
             formulario.contract = contrato
+            #TODO Refatorar codigo (criar uma funcao separada)
             formulario.aditivo_value = valor_contrato + \
                 (valor_contrato * float(formulario.percentage) / 100)
-            data1 = six_months = formulario.signature_date + \
+            data1 = formulario.signature_date + \
                 relativedelta(months=+formulario.validity)
             formulario.end_validity = data1
             formulario.save()
