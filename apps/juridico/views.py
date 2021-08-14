@@ -74,55 +74,50 @@ def novo_item_aditivo_valor(request):
     total = float(unit_price) * float(amount)
 
     contrato = get_object_or_404(Contrato, pk=id)
-    #qtd_notificacao = Notificacoes.qtd_notificacoes(request.user.id)
-    #notificacoes_menu = Notificacoes.listar_notificacoes_menu(request.user.id)
     valor_contrato = Item.valor_contrato(id)
     listar_item_id = Item.listar_item_id(id)
     if(valor_contrato == None):
         valor_contrato = 0
     valor_aditivo = AditivoValor.aditivo_value_id(id_aditivo)
 
+    
+
     if(float(diferenca.replace(',', '.')) < float(total)):
-        messages.error(request, 'O valor do item que você está tentando adcionar ao aditivo é maior que o saldo restante')
+        messages.error(
+            request, 'O valor do item que você está tentando adcionar ao aditivo é maior que o saldo restante')
     else:
         aditivo = get_object_or_404(AditivoValor, pk=id_aditivo)
         aditivo.difference = float(diferenca.replace(',', '.')) - total
         aditivo.save()
+
+        Item.objects.create(
+            item=item,
+            item_description=item_description,
+            unit_price=unit_price,
+            amount=amount,
+            item_contrato=contrato,
+            sum_value=float(unit_price.replace(',', '.')) * float(amount.replace(',', '.')),
+            pos_aditivo_value=True,
+            identity_aditivo_valor=id_aditivo,
+        )
+
         messages.success(request, 'Item adcionado')
 
-
-    Item.objects.create(
-        item=item,
-        item_description=item_description,
-        unit_price=unit_price,
-        amount=amount,
-        item_contrato=contrato,
-        sum_value=int(unit_price) * int(amount),
-        pos_aditivo_value=True,
-        identity_aditivo_valor=id_aditivo,
-    )
-
-    #adititvo_valor = get_object_or_404(AditivoValor, pk=id_aditivo)
-    #valor_contrato = Item.valor_contrato(id)
-    #adititvo_valor.aditivo_value = valor_contrato + (valor_contrato * float(adititvo_valor.percentage) / 100)
-    # print(adititvo_valor.aditivo_value)
-
-    # adititvo_valor.save()
     return HttpResponseRedirect("/juridico/configurar_itens_aditivo/" + str(id) + "/" + str(id_aditivo) + "/")
 
 
 def excluir_item_aditivo_valor(request, id_contract, id_aditivo, id_item):
     item = get_object_or_404(Item, pk=id_item)
-    item.remove_sum = True
-    item.pos_aditivo_value = True
-    item.identity_aditivo_valor = id_aditivo
-    item.save()
+    aditivo = get_object_or_404(AditivoValor, pk=id_aditivo)
+    aditivo.difference = aditivo.difference + item.sum_value
+    aditivo.save()
+    item.delete()
 
     adititvo_valor = get_object_or_404(AditivoValor, pk=id_aditivo)
     valor_contrato = Item.valor_contrato(id_contract)
     adititvo_valor.aditivo_value = valor_contrato + \
         (valor_contrato * float(adititvo_valor.percentage) / 100)
-    print(adititvo_valor.aditivo_value)
+    # print(adititvo_valor.aditivo_value)
 
     adititvo_valor.save()
     return HttpResponseRedirect("/juridico/configurar_itens_aditivo/" + str(id_contract) + "/" + str(id_aditivo) + "/")
@@ -286,6 +281,7 @@ def listar_contratos(request):
 
 
 def dados_contrato(request, id):
+    # print(f'##########{id}')
     qtd_notificacao = Notificacoes.qtd_notificacoes(request.user.id)
     notificacoes_menu = Notificacoes.listar_notificacoes_menu(request.user.id)
     aditivo_por_contrato = AditivoPrazo.aditivo_por_contrato(id)
@@ -304,6 +300,33 @@ def dados_contrato(request, id):
                       'lista_aditivo_valor': lista_aditivo_valor,
                       'qtd_notificacao': qtd_notificacao,
                       'notificacoes_menu': notificacoes_menu,
+                  })
+
+
+def dados_aditivo_valor(request, id_contract, id_aditivo):
+    print(f'##########{id_contract}')
+    print(id_aditivo)
+    qtd_notificacao = Notificacoes.qtd_notificacoes(request.user.id)
+    notificacoes_menu = Notificacoes.listar_notificacoes_menu(request.user.id)
+    aditivo_por_contrato = AditivoPrazo.aditivo_por_contrato(id_contract)
+    valor_contrato = Item.valor_contrato(id_contract)
+    contrato = Contrato.contrato_id(id_contract)
+    listar_item_id = Item.listar_item_id(id_contract)
+    total_item_id = Item.total_item_id(id_contract)
+    lista_aditivo_valor = AditivoValor.aditivo_value_contract(id_contract)
+    listar_identity_aditivo_valor = Item.listar_identity_aditivo_valor(
+        id_aditivo)
+    return render(request, 'juridico/dados_contrato.html',
+                  {
+                      'qtd_notificacao': qtd_notificacao,
+                      'notificacoes_menu': notificacoes_menu,
+                      'aditivo_por_contrato': aditivo_por_contrato,
+                      'valor_contrato': valor_contrato,
+                      'contrato': contrato,
+                      'listar_item_id': listar_identity_aditivo_valor,
+                      'total_item_id': total_item_id,
+                      'lista_aditivo_valor': lista_aditivo_valor,
+                      'listar_identity_aditivo_valor': listar_identity_aditivo_valor
                   })
 
 
@@ -380,6 +403,16 @@ def deletar_aditivo_praso(request, id):
     })
 
 
+def deletar_aditivo_valor(request, id):
+    aditivo_valor = get_object_or_404(AditivoValor, pk=id)
+    item = Item.objects.filter(identity_aditivo_valor=id)
+    for itens in item:
+        itens.delete()
+    aditivo_valor.delete()
+    messages.success(request, 'Aditivo de valor excluido com sucesso')
+    return HttpResponseRedirect("/juridico/dados_contrato/" + str(aditivo_valor.contract.id) + "/")
+
+
 def novo_aditivo_valor(request, id):
     contrato = get_object_or_404(Contrato, pk=id)
     valor_contrato = Item.valor_contrato(id)
@@ -440,7 +473,7 @@ def configurar_itens_aditivo(request, id, id_aditivo):
     qtd_notificacao = Notificacoes.qtd_notificacoes(request.user.id)
     notificacoes_menu = Notificacoes.listar_notificacoes_menu(request.user.id)
     valor_contrato = Item.valor_contrato(id)
-    listar_item_id = Item.listar_item_id(id)
+    listar_item_id = Item.listar_identity_aditivo_valor(id_aditivo)
     if(valor_contrato == None):
         valor_contrato = 0
     valor_aditivo = AditivoValor.aditivo_value_id(id_aditivo)

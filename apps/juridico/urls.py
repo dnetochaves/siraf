@@ -6,6 +6,7 @@ app_name = "juridico"
 urlpatterns = [
     path('', views.juridico, name="juridico"),
     path('dados_contrato/<int:id>/', views.dados_contrato, name="dados_contrato"),
+    path('dados_aditivo_valor/<int:id_contract>/<int:id_aditivo>/', views.dados_aditivo_valor, name="dados_aditivo_valor"),
     path('item_contratos/<int:id>/', views.item_contratos, name="item_contratos"),
     path('listar_contratos/', views.listar_contratos, name="listar_contratos"),
     path('novo_contrato/', views.novo_contrato, name="novo_contrato"),
@@ -24,5 +25,6 @@ urlpatterns = [
     path('listar_tipos/', views.listar_tipos, name="listar_tipos"),
     path('editar_tipo/<int:id>/', views.editar_tipo, name="editar_tipo"),
     path('deletar_tipo/<int:id>/', views.deletar_tipo, name="deletar_tipo"),
-    path('deletar_aditivo_praso/<int:id>/', views.deletar_aditivo_praso, name="deletar_aditivo_praso")
+    path('deletar_aditivo_praso/<int:id>/', views.deletar_aditivo_praso, name="deletar_aditivo_praso"),
+    path('deletar_aditivo_valor/<int:id>/', views.deletar_aditivo_valor, name="deletar_aditivo_valor")
 ]

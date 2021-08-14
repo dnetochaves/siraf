@@ -104,7 +104,7 @@ Juridicos
                 <div class="card-body">
                     <div class="d-flex mb-3">
                         <div class="flex-grow-1">
-                            <h5 class="mb-1">Diferença</h5>
+                            <h5 class="mb-1">Saldo</h5>
                         </div>
                         <a href="#" data-bs-toggle="dropdown" class="text-muted"><i class="fa fa-redo"></i></a>
                     </div>
@@ -148,8 +148,8 @@ Juridicos
                             <tr>
                                 <th scope="row">{{ listar_item_id.item }}</th>
                                 <td>{{ listar_item_id.item_description }}</td>
-                                <td>{{ listar_item_id.unit_price }}</td>
-                                <td>{{ listar_item_id.amount }}</td>
+                                <td>R$ {{ listar_item_id.unit_price | floatformat:"2g" }}</td>
+                                <td>R$ {{ listar_item_id.amount | floatformat:"2g" }}</td>
                                 <td class="">
 
                                     {% if listar_item_id.remove_sum == True %}
@@ -202,7 +202,7 @@ Juridicos
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Item</label>
-                            <input type="text" name="item" class="form-control" />
+                            <input type="text" required="required"  name="item" class="form-control" />
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Descrição</label>
@@ -211,11 +211,11 @@ Juridicos
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Preço Unitário</label>
-                            <input type="text" name="unit_price" class="form-control" />
+                            <input type="number" min="1" step="any" required="required" pattern="[0-9]+$" name="unit_price" class="form-control" />
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Quantidade</label>
-                            <input type="text" name="amount" class="form-control" />
+                            <input type="number" required="required" pattern="[0-9]+$" name="amount" class="form-control" />
                         </div>
                     </div>
                     <div class="modal-footer">

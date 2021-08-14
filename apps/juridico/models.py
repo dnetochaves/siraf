@@ -66,7 +66,7 @@ class Item(models.Model):
     def total_item_id(id):
         return Item.objects.filter(item_contrato=id).aggregate(Count('item'))['item__count']
 
-    def listar_item_aditivo_id(id):
+    def listar_identity_aditivo_valor(id):
         return Item.objects.filter(identity_aditivo_valor=id)
 
     def __str__(self):

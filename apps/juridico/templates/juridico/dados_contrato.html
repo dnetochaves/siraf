@@ -9,6 +9,8 @@ Juridicoss
 
 {% block content %}
 <div id="content" class="app-content">
+    <br>
+    {% include 'partials/plataforma/_message.html' %}
     <!-- BEGIN card -->
     <div class="card mb-3">
         <!-- BEGIN card-body -->
@@ -18,7 +20,7 @@ Juridicoss
                     <h5 class="mb-1">Contrato</h5>
                     <div>{{ contrato.company }}</div>
                 </div>
-                <a href="#" data-bs-toggle="dropdown" class="text-muted"><i class="fa fa-redo"></i></a>
+                <a href="{% url 'juridico:dados_contrato' contrato.id %}" class="text-muted"><i class="fa fa-redo"></i></a>
             </div>
 
             <div class="d-flex">
@@ -89,12 +91,13 @@ Juridicoss
                 <table class="table table-hover">
                     <thead>
                         <tr>
+                            <th scope="col"></th>
                             <th scope="col">Data da Assinatura</th>
                             <th scope="col">Vigência</th>
                             <th scope="col">Termino</th>
                             <th scope="col">Porcentagem</th>
                             <th scope="col">Valor</th>
-                            <th scope="col">Resto</th>
+                            <th scope="col">Saldo</th>
                             <th scope="col"></th>
                         </tr>
                     </thead>
@@ -103,6 +106,10 @@ Juridicoss
 
                         {% for lista_aditivo_valor in lista_aditivo_valor %}
                         <tr>
+                            <td class="align-middle">
+                                <a href="{% url 'juridico:dados_aditivo_valor' lista_aditivo_valor.contract.id lista_aditivo_valor.id %}"
+                                    class="btn btn-secondary"><i class="fa fa-plus"></i></a>
+                            </td>
                             <td>{{ lista_aditivo_valor.signature_date }}</td>
                             <td>{{ lista_aditivo_valor.validity }}</td>
                             <td>{{ lista_aditivo_valor.end_validity }}</td>
@@ -112,21 +119,23 @@ Juridicoss
                             <td>
                                 <div class="btn-group btn-group-sm" role="group" aria-label="...">
 
-                                    <a href="#" class="btn btn-danger"><i class="fa fa-trash-alt"></i></a>
+                                    <a href="{% url 'juridico:deletar_aditivo_valor' lista_aditivo_valor.id %}" class="btn btn-danger"><i class="fa fa-trash-alt"></i></a>
                                 </div>
                             </td>
 
                         </tr>
                         {% endfor %}
-
                     </tbody>
                 </table>
             </div>
             </p>
-
         </div>
+
+
     </div>
+   
     <hr>
+  
     <div class="card">
         <div class="card-header"><i class="fa fa-list"></i></div>
         <div class="card-body">
@@ -148,10 +157,10 @@ Juridicoss
                         <tbody>
                             {% for listar_item_id in listar_item_id %}
                             <tr>
-                                <th scope="row">{{ listar_item_id.item }}</th>
+                                <th>{{ listar_item_id.item }}</th>
                                 <td>{{ listar_item_id.item_description }}</td>
-                                <td>{{ listar_item_id.unit_price }}</td>
-                                <td>{{ listar_item_id.amount }}</td>
+                                <td>R$ {{ listar_item_id.unit_price | floatformat:"2g" }}</td>
+                                <td>R$ {{ listar_item_id.amount | floatformat:"2g" }}</td>
                                 <del></del>
                                 <td class="">
 
@@ -163,8 +172,8 @@ Juridicoss
                                     </span>
                                     {% elif listar_item_id.pos_aditivo_value == True %}
                                     <span
-                                        class="badge bg-primary-transparent-3 text-black-transparent-5 px-2 pt-5px pb-5px rounded fs-12px d-inline-flex align-items-center">
-                                        <i class="fa fa-circle fs-9px fa-fw me-5px text-primary-transparent-8"></i>R$
+                                        class="badge bg-success-transparent-3 text-black-transparent-5 px-2 pt-5px pb-5px rounded fs-12px d-inline-flex align-items-center">
+                                        <i class="fa fa-circle fs-9px fa-fw me-5px text-success-transparent-8"></i>R$
                                         {{ listar_item_id.sum_value | floatformat:"2g" }} : Aditivo de Valor
                                     </span>
                                     {% else %}
@@ -184,7 +193,6 @@ Juridicoss
 
         </div>
     </div>
-
-
+   
 </div>
 {% endblock content %}
