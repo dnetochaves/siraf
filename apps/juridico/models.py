@@ -59,6 +59,9 @@ class Item(models.Model):
 
     def listar_item_id(id):
         return Item.objects.filter(item_contrato=id)
+    
+    def listar_item_id_origin(id):
+        return Item.objects.filter(item_contrato=id, pos_aditivo_value=False)
 
     def valor_contrato(id_contrato):
         return Item.objects.filter(item_contrato=id_contrato, remove_sum=False, pos_aditivo_value=False).aggregate(Sum('sum_value'))['sum_value__sum']

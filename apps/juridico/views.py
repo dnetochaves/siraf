@@ -80,8 +80,6 @@ def novo_item_aditivo_valor(request):
         valor_contrato = 0
     valor_aditivo = AditivoValor.aditivo_value_id(id_aditivo)
 
-    
-
     if(float(diferenca.replace(',', '.')) < float(total)):
         messages.error(
             request, 'O valor do item que você está tentando adcionar ao aditivo é maior que o saldo restante')
@@ -96,7 +94,8 @@ def novo_item_aditivo_valor(request):
             unit_price=unit_price,
             amount=amount,
             item_contrato=contrato,
-            sum_value=float(unit_price.replace(',', '.')) * float(amount.replace(',', '.')),
+            sum_value=float(unit_price.replace(',', '.')) *
+            float(amount.replace(',', '.')),
             pos_aditivo_value=True,
             identity_aditivo_valor=id_aditivo,
         )
@@ -473,11 +472,12 @@ def configurar_itens_aditivo(request, id, id_aditivo):
     qtd_notificacao = Notificacoes.qtd_notificacoes(request.user.id)
     notificacoes_menu = Notificacoes.listar_notificacoes_menu(request.user.id)
     valor_contrato = Item.valor_contrato(id)
-    listar_item_id = Item.listar_identity_aditivo_valor(id_aditivo)
+    listar_identity_aditivo_valor = Item.listar_identity_aditivo_valor(
+        id_aditivo)
+    listar_item_id_origin = Item.listar_item_id_origin(id)
     if(valor_contrato == None):
         valor_contrato = 0
     valor_aditivo = AditivoValor.aditivo_value_id(id_aditivo)
-    # valor_aditivo.aditivo_value - valor_contrato
     diferenca = valor_aditivo.difference
     return render(request, 'juridico/configurar_itens_aditivo.html',
                   {
@@ -487,7 +487,50 @@ def configurar_itens_aditivo(request, id, id_aditivo):
                       'valor_aditivo': valor_aditivo,
                       'diferenca': diferenca,
                       'nome_contrato': contrato.company,
-                      'listar_item_id': listar_item_id,
+                      'listar_identity_aditivo_valor': listar_identity_aditivo_valor,
+                      'listar_item_id_origin': listar_item_id_origin,
                       'id_contract': id,
                       'id_aditivo': id_aditivo,
+                  })
+
+
+def get_item(request, id, id_aditivo, id_item):
+    get_item = get_object_or_404(Item, pk=id_item)
+    id_item_copy = get_item.id
+    item_description_copy = get_item.item_description
+    print(item_description_copy)
+    item_copy = get_item.item
+    unit_price_copy =int(get_item.unit_price)
+    amount_copy = int(get_item.amount)
+    item_contrato_copy = get_item.item_contrato
+    sum_value_copy = get_item.sum_value
+    sum_value_copy = get_item.sum_value
+    contrato = get_object_or_404(Contrato, pk=id)
+    qtd_notificacao = Notificacoes.qtd_notificacoes(request.user.id)
+    notificacoes_menu = Notificacoes.listar_notificacoes_menu(request.user.id)
+    valor_contrato = Item.valor_contrato(id)
+    listar_identity_aditivo_valor = Item.listar_identity_aditivo_valor(
+        id_aditivo)
+    listar_item_id_origin = Item.listar_item_id_origin(id)
+    if(valor_contrato == None):
+        valor_contrato = 0
+    valor_aditivo = AditivoValor.aditivo_value_id(id_aditivo)
+    diferenca = valor_aditivo.difference
+    return render(request, 'juridico/configurar_itens_aditivo.html',
+                  {
+                      'qtd_notificacao': qtd_notificacao,
+                      'notificacoes_menu': notificacoes_menu,
+                      'valor_contrato': valor_contrato,
+                      'valor_aditivo': valor_aditivo,
+                      'diferenca': diferenca,
+                      'nome_contrato': contrato.company,
+                      'listar_identity_aditivo_valor': listar_identity_aditivo_valor,
+                      'listar_item_id_origin': listar_item_id_origin,
+                      'id_contract': id,
+                      'id_aditivo': id_aditivo,
+                      'id_item_copy': id_item_copy,
+                      'item_copy': item_copy,
+                      'item_description_copy': item_description_copy,
+                      'unit_price_copy': unit_price_copy,
+                      'amount_copy': amount_copy,
                   })
