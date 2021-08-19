@@ -71,7 +71,7 @@ def novo_item_aditivo_valor(request):
     unit_price = request.POST['unit_price']
     amount = request.POST['amount']
     diferenca = request.POST['diferenca']
-    total = float(unit_price) * float(amount)
+    total = float(unit_price.replace(',', '.')) * float(amount)
 
     contrato = get_object_or_404(Contrato, pk=id)
     valor_contrato = Item.valor_contrato(id)
@@ -91,7 +91,7 @@ def novo_item_aditivo_valor(request):
         Item.objects.create(
             item=item,
             item_description=item_description,
-            unit_price=unit_price,
+            unit_price=unit_price.replace(',', '.'),
             amount=amount,
             item_contrato=contrato,
             sum_value=float(unit_price.replace(',', '.')) *
@@ -498,10 +498,9 @@ def get_item(request, id, id_aditivo, id_item):
     get_item = get_object_or_404(Item, pk=id_item)
     id_item_copy = get_item.id
     item_description_copy = get_item.item_description
-    print(item_description_copy)
     item_copy = get_item.item
-    unit_price_copy =int(get_item.unit_price)
-    amount_copy = int(get_item.amount)
+    unit_price_copy = get_item.unit_price
+    amount_copy = get_item.amount
     item_contrato_copy = get_item.item_contrato
     sum_value_copy = get_item.sum_value
     sum_value_copy = get_item.sum_value
