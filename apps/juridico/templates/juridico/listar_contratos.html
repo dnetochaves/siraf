@@ -84,7 +84,7 @@ Juridico
                                 </td>
                                 <td class="align-middle">
                                     <a href="{% url 'juridico:dados_contrato' listar_contrato.id %}"
-                                        class="btn btn-secondary"><i class="fa fa-eye"></i></a>
+                                        class="btn btn-outline-default"><i class="fa fa-eye"></i></a>
                                 </td>
                                 <td class="align-middle">{{ listar_contrato.date }}</td>
                                 <td class="align-middle">{{ listar_contrato.company }}</td>
@@ -101,14 +101,8 @@ Juridico
                                         {{ listar_contrato.id | verificar_aditivo_prazo }}</span></td>
                                 <td class="align-middle">
                                     <div class="btn-group btn-group-sm" role="group" aria-label="...">
-                                        <a href="{% url 'juridico:editar_contrato' listar_contrato.id %}"
-                                            class="btn btn-warning"><i class="fa fa-edit"></i></a>
-                                        <a href="{% url 'juridico:deletar_contrato' listar_contrato.id %}"
-                                            class="btn btn-danger"><i class="fa fa-trash-alt"></i></a>
-                                        <a href="{% url 'juridico:novo_aditivo_prazo' listar_contrato.id %}"
-                                            class="btn btn-secondary"><i class="fa fa-clock"></i></a>
-                                        <a href="{% url 'juridico:novo_aditivo_valor' listar_contrato.id %}"
-                                            class="btn btn-success"><i class="fa fa-money-bill-alt"></i></a>
+                                        <a href="{% url 'juridico:processos' listar_contrato.id listar_contrato.company %}"
+                                            class="btn btn-outline-default"><i class="fa fa-redo"></i></a>
                                     </div>
                                 </td>
                             </tr>

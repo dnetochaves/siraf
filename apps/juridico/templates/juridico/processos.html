@@ -1,0 +1,64 @@
+{% extends 'plataforma_base_juridico.html' %}
+{% load filters %}
+
+
+
+{% block title %}
+Processos
+{% endblock title %}
+
+
+{% block content %}
+<div id="app" class="app app-content-full-height">
+    <div id="content" class="app-content p-0">
+        <p class="lead">
+            Contrato: <strong>{{ company }}</strong>
+        </p>
+        <hr>
+        <div class="card-group">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Editar</h5>
+                    <p class="card-text">Editar dados do contrato</p>
+                    <p class="card-text"><small class="text-muted"><a
+                                href="{% url 'juridico:editar_contrato' id_contract %}">Acessar</a></small></p>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Excluir</h5>
+                    <p class="card-text">Excluir dados do contrato</p>
+                    <p class="card-text"><small class="text-muted"><a
+                                href="{% url 'juridico:deletar_contrato' id_contract %}">Acessar</a></small></p>
+                </div>
+            </div>
+        </div>
+        <div class="card-group">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Aditivo de Prazo</h5>
+                    <p class="card-text">Aplicar aditivo de prazo ao contrato selecionado</p>
+                    <p class="card-text"><small class="text-muted"><a
+                                href="{% url 'juridico:novo_aditivo_prazo' id_contract %}">Acessar</a></small></p>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Aditivo de Valor</h5>
+                    <p class="card-text">Aplicar aditivo de valor ao contrato selecionado</p>
+                    <p class="card-text"><small class="text-muted"><a
+                                href="{% url 'juridico:novo_aditivo_valor' id_contract %}">Acessar</a></small></p>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Supressão</h5>
+                    <p class="card-text">Aplicar supressão ao contrato selecionado</p>
+                    <p class="card-text"><small class="text-muted"><a
+                                href="{% url 'juridico:novo_aditivo_valor' id_contract %}">Acessar</a></small></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

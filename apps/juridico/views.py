@@ -453,8 +453,8 @@ def novo_aditivo_valor(request, id):
             return HttpResponseRedirect("/juridico/configurar_itens_aditivo/" + str(id) + "/" + str(id_aditivo) + "/")
         else:
             a = 25 - valor_percentage_contract
-            messages.error(request, 'Desculpa! Você usou de um limite de 25%  ' +
-                           str(valor_percentage_contract) + '  e restam ' + str(a))
+            messages.info(request, 'Atenção! Você usou de um limite de 25%  ' +
+                          str(valor_percentage_contract) + '%  e restam ' + str(a)+'%')
 
     return render(request, 'juridico/aditivo_valor_form.html',
                   {
@@ -532,4 +532,16 @@ def get_item(request, id, id_aditivo, id_item):
                       'item_description_copy': item_description_copy,
                       'unit_price_copy': unit_price_copy,
                       'amount_copy': amount_copy,
+                  })
+
+
+def processos(request, id_contract, company):
+    qtd_notificacao = Notificacoes.qtd_notificacoes(request.user.id)
+    notificacoes_menu = Notificacoes.listar_notificacoes_menu(request.user.id)
+    return render(request, 'juridico/processos.html',
+                  {
+                      'id_contract': id_contract,
+                      'qtd_notificacao': qtd_notificacao,
+                      'notificacoes_menu': notificacoes_menu,
+                      'company': company
                   })

@@ -16,7 +16,7 @@ Juridicos
                 <li class="breadcrumb-item active">Configurar Aditivo Valor</li>
             </ul>
             <h1 class="page-header mb-0">
-                Contrato: {{ nome_contrato }} 
+                Contrato: {{ nome_contrato }}
             </h1>
         </div>
         <div class="ms-auto">
@@ -198,18 +198,22 @@ Juridicos
                     <table class="table table-hover">
                         <thead>
                             <tr>
+                                <th scope="col">Cod</th>
                                 <th scope="col">Item</th>
                                 <th scope="col">Descrição</th>
                                 <th scope="col">Preço Unitário</th>
                                 <th scope="col">Quantidade</th>
                                 <th scope="col">Valor Total</th>
-                                <th scope="col"></th>
+                                <th scope="col">
+                                   <center> <a href="#modalAddCopy" data-bs-toggle="modal" class="btn-sm btn-primary">Abrir</a></center>
+                                </th>
                             </tr>
                         </thead>
                         <tbody>
                             {% for listar_item_id_origin in listar_item_id_origin %}
                             <tr>
-                                <th scope="row">{{ listar_item_id_origin.item }}</th>
+                                <th scope="row">{{ listar_item_id_origin.id }}</th>
+                                <th>{{ listar_item_id_origin.item }}</th>
                                 <td>{{ listar_item_id_origin.item_description }}</td>
                                 <td>R$ {{ listar_item_id_origin.unit_price | floatformat:"2g" }}</td>
                                 <td>R$ {{ listar_item_id_origin.amount | floatformat:"2g" }}</td>
@@ -235,8 +239,6 @@ Juridicos
                                 <td class="text-center">
                                     <a href="{% url 'juridico:get_item' id_contract id_aditivo listar_item_id_origin.id %}"
                                         class="btn-sm btn-info"><i class="fa fa-upload"></i></a>
-                                    <a href="#modalAddCopy" data-bs-toggle="modal" class="btn-sm btn-primary"><i
-                                            class="fa fa-copy"></i></a>
                                 </td>
                             </tr>
                             {% empty %}
@@ -317,18 +319,19 @@ Juridicos
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Descrição: {{ item_description_copy }}</label>
-                            <input type="hidden" name="item_description" value="{{ item_description_copy }}" class="form-control" />
+                            <input type="hidden" name="item_description" value="{{ item_description_copy }}"
+                                class="form-control" />
 
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Preço Unitário</label>
-                            <input type="text" value="{{ unit_price_copy }}" required="required"
-                                name="unit_price" class="form-control" />
+                            <input type="text" value="{{ unit_price_copy }}" required="required" name="unit_price"
+                                class="form-control" />
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Quantidade</label>
-                            <input type="number" value="{{ amount_copy }}" required="required" pattern="[0-9]+$" name="amount"
-                                class="form-control" />
+                            <input type="number" value="{{ amount_copy }}" required="required" pattern="[0-9]+$"
+                                name="amount" class="form-control" />
                         </div>
                     </div>
                     <div class="modal-footer">
