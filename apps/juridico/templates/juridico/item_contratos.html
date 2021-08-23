@@ -35,7 +35,6 @@ Notificações
                                             <table class="table table-hover">
                                                 <thead>
                                                     <tr>
-                                                        <th scope="col">Cod</th>
                                                         <th scope="col">Item</th>
                                                         <th scope="col">Descrição</th>
                                                         <th scope="col">Preço Unitário</th>
@@ -48,7 +47,6 @@ Notificações
                                                 <tbody>
                                                     {% for listar_item_id in listar_item_id %}
                                                     <tr>
-                                                        <th scope="row">{{ listar_item_id.id }}</th>
                                                         <th>{{ listar_item_id.item }}</th>
                                                         <td>{{ listar_item_id.item_description }}</td>
                                                         <td>R$ {{ listar_item_id.unit_price | floatformat:"2g" }}</td>

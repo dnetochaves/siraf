@@ -70,7 +70,7 @@ class Item(models.Model):
         return Item.objects.filter(item_contrato=id).aggregate(Count('item'))['item__count']
 
     def listar_identity_aditivo_valor(id):
-        return Item.objects.filter(identity_aditivo_valor=id).order_by('item')
+        return Item.objects.filter(identity_aditivo_valor=id).order_by('id')
 
     def __str__(self):
         return self.item
