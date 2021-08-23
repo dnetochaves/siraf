@@ -43,6 +43,7 @@ class Contrato(models.Model):
 
 class Item(models.Model):
     item = models.CharField(max_length=50, null=True, blank=True)
+    item1 = models.IntegerField(null=True, blank=True)
     item_description = models.TextField(null=True, blank=True)
     unit_price = models.FloatField(null=True, blank=True)
     amount = models.IntegerField(null=True, blank=True)
@@ -58,10 +59,10 @@ class Item(models.Model):
         return Item.objects.all()
 
     def listar_item_id(id):
-        return Item.objects.filter(item_contrato=id).order_by('id')
+        return Item.objects.filter(item_contrato=id).order_by('item1')
     
     def listar_item_id_origin(id):
-        return Item.objects.filter(item_contrato=id, pos_aditivo_value=False).order_by('id')
+        return Item.objects.filter(item_contrato=id, pos_aditivo_value=False).order_by('item1')
 
     def valor_contrato(id_contrato):
         return Item.objects.filter(item_contrato=id_contrato, remove_sum=False, pos_aditivo_value=False).aggregate(Sum('sum_value'))['sum_value__sum']
@@ -70,10 +71,10 @@ class Item(models.Model):
         return Item.objects.filter(item_contrato=id).aggregate(Count('item'))['item__count']
 
     def listar_identity_aditivo_valor(id):
-        return Item.objects.filter(identity_aditivo_valor=id).order_by('id')
+        return Item.objects.filter(identity_aditivo_valor=id).order_by('item1')
 
     def __str__(self):
-        return self.item
+        return str(self.item1)
 
 
 class AditivoPrazo(models.Model):

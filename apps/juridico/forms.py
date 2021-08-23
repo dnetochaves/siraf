@@ -12,7 +12,7 @@ class ContratoForm(ModelForm):
 class ItemForm(ModelForm):
     class Meta:
         model = Item
-        fields = ['item', 'item_description',
+        fields = ['item1', 'item_description',
                   'unit_price', 'amount', 'item_contrato']
 
 

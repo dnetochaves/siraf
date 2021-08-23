@@ -66,7 +66,7 @@ def novo_item(request):
 def novo_item_aditivo_valor(request):
     id = request.POST['id_contract']
     id_aditivo = request.POST['id_aditivo']
-    item = request.POST['item']
+    item1 = request.POST['item']
     item_description = request.POST['item_description']
     unit_price = request.POST['unit_price']
     amount = request.POST['amount']
@@ -89,7 +89,7 @@ def novo_item_aditivo_valor(request):
         aditivo.save()
 
         Item.objects.create(
-            item=item,
+            item1=item1,
             item_description=item_description,
             unit_price=unit_price.replace(',', '.'),
             amount=amount,
@@ -498,7 +498,7 @@ def get_item(request, id, id_aditivo, id_item):
     get_item = get_object_or_404(Item, pk=id_item)
     id_item_copy = get_item.id
     item_description_copy = get_item.item_description
-    item_copy = get_item.item
+    item_copy = get_item.item1
     unit_price_copy = get_item.unit_price
     amount_copy = get_item.amount
     item_contrato_copy = get_item.item_contrato

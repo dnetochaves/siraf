@@ -146,7 +146,7 @@ Juridicos
                         <tbody>
                             {% for listar_identity_aditivo_valor in listar_identity_aditivo_valor %}
                             <tr>
-                                <th scope="row">{{ listar_identity_aditivo_valor.item }}</th>
+                                <th scope="row">{{ listar_identity_aditivo_valor.item1 }}</th>
                                 <td>{{ listar_identity_aditivo_valor.item_description }}</td>
                                 <td>R$ {{ listar_identity_aditivo_valor.unit_price | floatformat:"2g" }}</td>
                                 <td>R$ {{ listar_identity_aditivo_valor.amount | floatformat:"2g" }}</td>
@@ -211,7 +211,7 @@ Juridicos
                         <tbody>
                             {% for listar_item_id_origin in listar_item_id_origin %}
                             <tr>
-                                <th>{{ listar_item_id_origin.item }}</th>
+                                <th>{{ listar_item_id_origin.item1 }}</th>
                                 <td>{{ listar_item_id_origin.item_description }}</td>
                                 <td>R$ {{ listar_item_id_origin.unit_price | floatformat:"2g" }}</td>
                                 <td>R$ {{ listar_item_id_origin.amount | floatformat:"2g" }}</td>
