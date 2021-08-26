@@ -52,7 +52,8 @@ class Item(models.Model):
     sum_value = models.FloatField(null=True, blank=True)
     sum_value1 = models.FloatField(null=True, blank=True)
     remove_sum = models.BooleanField(default=False, null=True, blank=True)
-    pos_aditivo_value = models.BooleanField(default=False, null=True, blank=True)
+    pos_aditivo_value = models.BooleanField(
+        default=False, null=True, blank=True)
     identity_aditivo_valor = models.IntegerField(null=True, blank=True)
 
     def listar_item():
@@ -60,7 +61,7 @@ class Item(models.Model):
 
     def listar_item_id(id):
         return Item.objects.filter(item_contrato=id).order_by('item1')
-    
+
     def listar_item_id_origin(id):
         return Item.objects.filter(item_contrato=id, pos_aditivo_value=False).order_by('item1')
 
@@ -134,7 +135,8 @@ class AditivoValor(models.Model):
     end_validity = models.DateField(
         auto_now=False, auto_now_add=False, null=True, blank=True)
     official_diary = models.CharField(max_length=50, blank=True, null=True)
-    percentage = models.FloatField(choices=VALUE_PERCENTAGE, blank=True, null=True)
+    percentage = models.FloatField(
+        choices=VALUE_PERCENTAGE, blank=True, null=True)
     aditivo_value = models.FloatField(null=True, blank=True)
     difference = models.FloatField(null=True, blank=True)
 
@@ -146,10 +148,23 @@ class AditivoValor(models.Model):
 
     def valor_percentage_contract(id):
         return AditivoValor.objects.filter(contract=id).aggregate(Sum('percentage'))['percentage__sum']
-    
 
     def aditivo_value_last():
         return AditivoValor.objects.last()
 
     def __str__(self):
         return str(self.contract)
+
+
+class Supressao(models.Model):
+    contract = models.ForeignKey(
+        Contrato, on_delete=models.CASCADE, blank=True, null=True)
+    signature_date = models.DateField(
+        auto_now=False, auto_now_add=False, blank=True, null=True)
+    validity = models.IntegerField(blank=True, null=True)
+    end_validity = models.DateField(
+        auto_now=False, auto_now_add=False, null=True, blank=True)
+    official_diary = models.CharField(max_length=50, blank=True, null=True)
+    percentage = models.FloatField(blank=True, null=True)
+    aditivo_value = models.FloatField(null=True, blank=True)
+    difference = models.FloatField(null=True, blank=True)
