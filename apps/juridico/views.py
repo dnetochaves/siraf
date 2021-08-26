@@ -1,8 +1,8 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponseRedirect
 from apps.notificacoes.models import Notificacoes
-from apps.juridico.models import Contrato, Item, Tipo, AditivoPrazo, AditivoValor
-from . forms import ContratoForm, ItemForm, TipoForm, AditivoPrazoForm, AditivoValorForm
+from apps.juridico.models import Contrato, Item, Tipo, AditivoPrazo, AditivoValor, Supressao
+from . forms import ContratoForm, ItemForm, TipoForm, AditivoPrazoForm, AditivoValorForm, SupressaoForm
 from django.contrib import messages
 from datetime import date
 from dateutil.relativedelta import relativedelta
@@ -544,4 +544,72 @@ def processos(request, id_contract, company):
                       'qtd_notificacao': qtd_notificacao,
                       'notificacoes_menu': notificacoes_menu,
                       'company': company
+                  })
+
+
+def nova_supressao(request, id):
+    contrato = get_object_or_404(Contrato, pk=id)
+    valor_contrato = Item.valor_contrato(id)
+    qtd_notificacao = Notificacoes.qtd_notificacoes(request.user.id)
+    notificacoes_menu = Notificacoes.listar_notificacoes_menu(request.user.id)
+
+    form = SupressaoForm(request.POST or None)
+    if form.is_valid():
+        formulario = form.save(commit=False)
+
+        formulario.contract = contrato
+
+        # TODO Refatorar codigo (criar uma funcao separada)
+        formulario.aditivo_value = valor_contrato - \
+            (valor_contrato * float(formulario.percentage) / 100)
+
+        formulario.difference = valor_contrato - valor_contrato + \
+            (valor_contrato * float(formulario.percentage) / 100)
+
+        data1 = formulario.signature_date + \
+            relativedelta(months=+formulario.validity)
+        formulario.end_validity = data1
+
+        formulario.save()
+
+        supressao = Supressao.supressao_value_last()
+        id_supressao = supressao.id
+
+        return HttpResponseRedirect("/juridico/configurar_itens_supressao/" + str(id) + "/" + str(id_supressao) + "/")
+
+    return render(request, 'juridico/supressao_form.html',
+                  {
+                      'form': form,
+                      'qtd_notificacao': qtd_notificacao,
+                      'notificacoes_menu': notificacoes_menu,
+                      'valor_contrato': valor_contrato,
+                      'nome_contrato': contrato.company,
+                  })
+
+
+def configurar_itens_supressao(request, id, id_supressao):
+    contrato = get_object_or_404(Contrato, pk=id)
+    qtd_notificacao = Notificacoes.qtd_notificacoes(request.user.id)
+    notificacoes_menu = Notificacoes.listar_notificacoes_menu(request.user.id)
+    valor_contrato = Item.valor_contrato(id)
+    supressao = Supressao.get_supressao(id_supressao)
+    #listar_identity_aditivo_valor = Item.listar_identity_aditivo_valor(
+    #    id_aditivo)
+    listar_item_id_origin = Item.listar_item_id_origin(id)
+    if(valor_contrato == None):
+        valor_contrato = 0
+    #valor_aditivo = AditivoValor.aditivo_value_id(id_aditivo)
+    diferenca = supressao.difference
+    return render(request, 'juridico/configurar_itens_supressao.html',
+                  {
+                      'qtd_notificacao': qtd_notificacao,
+                      'notificacoes_menu': notificacoes_menu,
+                      'valor_contrato': valor_contrato,
+                      'supressao': supressao,
+                      'diferenca': diferenca,
+                      'nome_contrato': contrato.company,
+                      #'listar_identity_aditivo_valor': listar_identity_aditivo_valor,
+                      'listar_item_id_origin': listar_item_id_origin,
+                      'id_contract': id,
+                      'id_supressao': id_supressao,
                   })

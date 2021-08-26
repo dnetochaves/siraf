@@ -168,3 +168,12 @@ class Supressao(models.Model):
     percentage = models.FloatField(blank=True, null=True)
     aditivo_value = models.FloatField(null=True, blank=True)
     difference = models.FloatField(null=True, blank=True)
+
+    def supressao_value_last():
+        return Supressao.objects.last()
+    
+    def get_supressao(id):
+        return Supressao.objects.get(pk=id)
+    
+    def __str__(self):
+        return str(self.contract)
