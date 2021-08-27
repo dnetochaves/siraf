@@ -55,6 +55,9 @@ class Item(models.Model):
     pos_aditivo_value = models.BooleanField(
         default=False, null=True, blank=True)
     identity_aditivo_valor = models.IntegerField(null=True, blank=True)
+    pos_supressao = models.BooleanField(
+        default=False, null=True, blank=True)
+    identity_supressao = models.IntegerField(null=True, blank=True)
 
     def listar_item():
         return Item.objects.all()
