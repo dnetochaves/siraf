@@ -186,6 +186,9 @@ class Supressao(models.Model):
     
     def listar_supressao_contract(id):
         return Supressao.objects.filter(contract=id)
+    
+    def valor_percentage_contract_sup(id):
+        return Supressao.objects.filter(contract=id).aggregate(Sum('percentage'))['percentage__sum']
 
     def __str__(self):
         return str(self.contract)

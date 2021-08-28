@@ -356,8 +356,9 @@ def dados_aditivo_valor(request, id_contract, id_aditivo):
     lista_aditivo_valor = AditivoValor.aditivo_value_contract(id_contract)
     listar_identity_aditivo_valor = Item.listar_identity_aditivo_valor(
         id_aditivo)
-    listar_supressao_contract = Supressao.listar_supressao_contract(id_contract)
-        
+    listar_supressao_contract = Supressao.listar_supressao_contract(
+        id_contract)
+
     return render(request, 'juridico/dados_contrato.html',
                   {
                       'qtd_notificacao': qtd_notificacao,
@@ -384,8 +385,9 @@ def dados_supressao(request, id_contract, id_supressao):
     lista_aditivo_valor = AditivoValor.aditivo_value_contract(id_contract)
     listar_identity_supressao = Item.listar_identity_supressao(
         id_supressao)
-    listar_supressao_contract = Supressao.listar_supressao_contract(id_contract)
-    
+    listar_supressao_contract = Supressao.listar_supressao_contract(
+        id_contract)
+
     return render(request, 'juridico/dados_contrato.html',
                   {
                       'qtd_notificacao': qtd_notificacao,
@@ -676,29 +678,45 @@ def nova_supressao(request, id):
     qtd_notificacao = Notificacoes.qtd_notificacoes(request.user.id)
     notificacoes_menu = Notificacoes.listar_notificacoes_menu(request.user.id)
 
+    # TODO pega o valor total das porventagem de cada supressao feito. Melhorar nome da variavel
+    valor_percentage_contract = Supressao.valor_percentage_contract_sup(id)
+    print(valor_percentage_contract)
     form = SupressaoForm(request.POST or None)
     if form.is_valid():
         formulario = form.save(commit=False)
 
-        formulario.contract = contrato
+        if(valor_percentage_contract == None):
+            valor_percentage_contract = 0
+        if(valor_percentage_contract + formulario.percentage <= 25):
+            if(valor_contrato == None):
+                valor_contrato = 0
+                messages.error(
+                    request, 'O cantrato que você está tentando fazer uma aditivo de valor não possue itens cadastrados.')
+                return HttpResponseRedirect("/juridico/listar_contratos/")
 
-        # TODO Refatorar codigo (criar uma funcao separada)
-        formulario.aditivo_value = valor_contrato - \
+            formulario.contract = contrato
+
+            # TODO Refatorar codigo (criar uma funcao separada)
+            formulario.aditivo_value = valor_contrato - \
             (valor_contrato * float(formulario.percentage) / 100)
 
-        formulario.difference = valor_contrato - valor_contrato + \
-            (valor_contrato * float(formulario.percentage) / 100)
+            formulario.difference = valor_contrato - valor_contrato + \
+                (valor_contrato * float(formulario.percentage) / 100)
 
-        data1 = formulario.signature_date + \
-            relativedelta(months=+formulario.validity)
-        formulario.end_validity = data1
+            data1 = formulario.signature_date + \
+                relativedelta(months=+formulario.validity)
+            formulario.end_validity = data1
 
-        formulario.save()
+            formulario.save()
 
-        supressao = Supressao.supressao_value_last()
-        id_supressao = supressao.id
+            supressao = Supressao.supressao_value_last()
+            id_supressao = supressao.id
 
-        return HttpResponseRedirect("/juridico/configurar_itens_supressao/" + str(id) + "/" + str(id_supressao) + "/")
+            return HttpResponseRedirect("/juridico/configurar_itens_supressao/" + str(id) + "/" + str(id_supressao) + "/")
+        else:
+            a = 25 - valor_percentage_contract
+            messages.info(request, 'Atenção! Você usou de um limite de 25%  ' +
+                          str(valor_percentage_contract) + '%  e restam ' + str(a)+'%')
 
     return render(request, 'juridico/supressao_form.html',
                   {
