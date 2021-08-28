@@ -72,10 +72,13 @@ class Item(models.Model):
         return Item.objects.filter(item_contrato=id_contrato, remove_sum=False, pos_aditivo_value=False).aggregate(Sum('sum_value'))['sum_value__sum']
 
     def total_item_id(id):
-        return Item.objects.filter(item_contrato=id).aggregate(Count('item'))['item__count']
+        return Item.objects.filter(item_contrato=id).aggregate(Count('item1'))['item1__count']
 
     def listar_identity_aditivo_valor(id):
         return Item.objects.filter(identity_aditivo_valor=id).order_by('item1')
+
+    def listar_identity_supressao(id):
+        return Item.objects.filter(identity_supressao=id).order_by('item1')
 
     def __str__(self):
         return str(self.item1)
@@ -174,9 +177,15 @@ class Supressao(models.Model):
 
     def supressao_value_last():
         return Supressao.objects.last()
-    
+
     def get_supressao(id):
         return Supressao.objects.get(pk=id)
     
+    def aditivo_value_id(id_supressao):
+        return Supressao.objects.get(pk=id_supressao)
+    
+    def listar_supressao_contract(id):
+        return Supressao.objects.filter(contract=id)
+
     def __str__(self):
         return str(self.contract)

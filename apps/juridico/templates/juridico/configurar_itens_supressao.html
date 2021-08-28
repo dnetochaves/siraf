@@ -19,7 +19,7 @@ Juridicos
                 Contrato: {{ nome_contrato }}
             </h1>
         </div>
-       
+
     </div>
     {% include 'partials/plataforma/_message.html' %}
     <div class="row">
@@ -58,7 +58,7 @@ Juridicos
 
                     <div class="d-flex">
                         <div class="flex-grow-1">
-                            <h3 class="mb-1">{{ supressao.percentage | floatformat:"0g"}}</h3>
+                            <h3 class="mb-1">{{ supressao.percentage | floatformat:"1g"}}</h3>
 
                         </div>
                         <div
@@ -78,7 +78,7 @@ Juridicos
                 <div class="card-body">
                     <div class="d-flex mb-3">
                         <div class="flex-grow-1">
-                            <h5 class="mb-1">Valor Supressão</h5>
+                            <h5 class="mb-1">Valor do Contrato com Supressão</h5>
                         </div>
                         <a href="#" data-bs-toggle="dropdown" class="text-muted"><i class="fa fa-redo"></i></a>
                     </div>
@@ -108,7 +108,7 @@ Juridicos
 
                     <div class="d-flex">
                         <div class="flex-grow-1">
-                            <h3 class="mb-1">R$ {{ diferenca | floatformat:"2g"}}</h3>
+                            <h3 class="mb-1">R$ {{ supressao.difference | floatformat:"2g"}}</h3>
 
                         </div>
                         <div
@@ -121,5 +121,177 @@ Juridicos
 
         </div>
     </div>
+    <div class="card">
+        <div class="card-header"><i class="fa fa-list"></i></div>
+        <div class="card-body">
+            <h5 class="card-title">Itens Supressão </h5>
+            <h6 class="card-subtitle mb-3 text-muted">Total de itens do Aditivo</h6>
+            <p class="card-text mb-3">
+            <div class="table-responsive">
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th scope="col">Item</th>
+                                <th scope="col">Descrição</th>
+                                <th scope="col">Preço Unitário</th>
+                                <th scope="col">Quantidade</th>
+                                <th scope="col">Valor Total</th>
+                                <th scope="col"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for listar_identity_supressao in listar_identity_supressao %}
+                            <tr>
+                                <th scope="row">{{ listar_identity_supressao.item1 }}</th>
+                                <td>{{ listar_identity_supressao.item_description }}</td>
+                                <td>R$ {{ listar_identity_supressao.unit_price | floatformat:"2g" }}</td>
+                                <td>R$ {{ listar_identity_supressao.amount | floatformat:"2g" }}</td>
+                                <td class="">
+
+                                    {% if listar_identity_supressao.remove_sum == True %}
+                                    <span
+                                        class="badge bg-danger-transparent-3 text-black-transparent-5 px-2 pt-5px pb-5px rounded fs-12px d-inline-flex align-items-center">
+                                        <i class="fa fa-circle fs-9px fa-fw me-5px text-danger-transparent-8"></i><del>R$
+                                            {{ listar_identity_supressao.sum_value | floatformat:"2g" }} </del>:
+                                        Excluido
+                                    </span>
+                                    {% elif listar_identity_supressao.pos_supressao == True %}
+                                    <span
+                                        class="badge bg-success-transparent-3 text-black-transparent-5 px-2 pt-5px pb-5px rounded fs-12px d-inline-flex align-items-center">
+                                        <i class="fa fa-circle fs-9px fa-fw me-5px text-success-transparent-8"></i>R$
+                                        {{ listar_identity_supressao.sum_value | floatformat:"2g" }} : Supressão
+                                    </span>
+                                    {% else %}
+                                    {{ listar_identity_supressao.sum_value | floatformat:"2g" }}
+                                    {% endif %}
+
+                                </td>
+                                <td class="text-center"> <a
+                                        href=""
+                                        class="btn-sm btn-danger"><i class="fa fa-trash-alt"></i></a></td>
+                            </tr>
+                            {% empty %}
+                            <li>Ainda não foram adcionados itens a esse Aditivo de Valor</li>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            </p>
+
+        </div>
+    </div>
+    <hr>
+    <div class="card">
+        <div class="card-header"><i class="fa fa-list"></i></div>
+        <div class="card-body">
+            <h5 class="card-title">Itens Contrato </h5>
+            <h6 class="card-subtitle mb-3 text-muted">Total de itens do Contrato</h6>
+            <p class="card-text mb-3">
+            <div class="table-responsive">
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th scope="col">Item</th>
+                                <th scope="col">Descrição</th>
+                                <th scope="col">Preço Unitário</th>
+                                <th scope="col">Quantidade</th>
+                                <th scope="col">Valor Total</th>
+                                <th scope="col">
+                                    <center> <a href="#modalAddCopy" data-bs-toggle="modal"
+                                            class="btn-sm btn-primary">Abrir</a></center>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for listar_item_id_origin in listar_item_id_origin %}
+                            <tr>
+                                <th>{{ listar_item_id_origin.item1 }}</th>
+                                <td>{{ listar_item_id_origin.item_description }}</td>
+                                <td>R$ {{ listar_item_id_origin.unit_price | floatformat:"2g" }}</td>
+                                <td>R$ {{ listar_item_id_origin.amount | floatformat:"2g" }}</td>
+                                <td class="">
+
+                                    {% if listar_item_id_origin.remove_sum == True %}
+                                    <span
+                                        class="badge bg-danger-transparent-3 text-black-transparent-5 px-2 pt-5px pb-5px rounded fs-12px d-inline-flex align-items-center">
+                                        <i class="fa fa-circle fs-9px fa-fw me-5px text-danger-transparent-8"></i><del>R$
+                                            {{ listar_item_id_origin.sum_value | floatformat:"2g" }} </del>: Excluido
+                                    </span>
+                                    {% elif listar_item_id_origin.pos_aditivo_value == True %}
+                                    <span
+                                        class="badge bg-success-transparent-3 text-black-transparent-5 px-2 pt-5px pb-5px rounded fs-12px d-inline-flex align-items-center">
+                                        <i class="fa fa-circle fs-9px fa-fw me-5px text-success-transparent-8"></i>R$
+                                        {{ listar_item_id_origin.sum_value | floatformat:"2g" }} : Aditivo de Valor
+                                    </span>
+                                    {% else %}
+                                    {{ listar_item_id_origin.sum_value | floatformat:"2g" }}
+                                    {% endif %}
+
+                                </td>
+                                <td class="text-center">
+                                    <a href="{% url 'juridico:get_item_supressao' id_contract id_supressao listar_item_id_origin.id %}"
+                                        class="btn-sm btn-info"><i class="fa fa-upload"></i></a>
+                                </td>
+                            </tr>
+                            {% empty %}
+                            <li>Ainda não foram adcionados itens a esse Aditivo de Valor</li>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            </p>
+
+        </div>
+    </div>
+    <!-- BEGIN modal -->
+    <div class="modal fade" id="modalAddCopy">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form action="{% url 'juridico:novo_item_supressao' %}" method="post">
+                    {% csrf_token %}
+                    <div class="modal-header">
+                        <h5 class="modal-title">Add Item</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <input type="hidden" name="id_contract" value="{{ id_contract }}" class="form-control" />
+                            <input type="hidden" name="id_supressao" value="{{ id_supressao }}" class="form-control" />
+                            <input type="hidden" name="diferenca" value="{{ supressao.difference }}" class="form-control" />
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Item: {{ item_copy }}</label>
+                            <input type="hidden" name="item" value="{{ item_copy }}" class="form-control" />
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Descrição: {{ item_description_copy }}</label>
+                            <input type="hidden" name="item_description" value="{{ item_description_copy }}"
+                                class="form-control" />
+
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Preço Unitário</label>
+                            <input type="text" value="{{ unit_price_copy }}" required="required" name="unit_price"
+                                class="form-control" />
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Quantidade</label>
+                            <input type="number" value="{{ amount_copy }}" required="required" pattern="[0-9]+$"
+                                name="amount" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <a href="#" class="btn btn-default" data-bs-dismiss="modal">Voltar</a>
+                        <button type="submit" class="btn btn-primary">Salvar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- END modal -->
 </div>
 {% endblock content %}
