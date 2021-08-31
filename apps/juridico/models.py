@@ -192,3 +192,6 @@ class Supressao(models.Model):
 
     def __str__(self):
         return str(self.contract)
+
+
+
